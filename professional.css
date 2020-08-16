@@ -1,0 +1,167 @@
+@charset "utf-8";
+
+nav span {
+    margin-right: 1ex;
+}
+
+article {
+    margin-bottom: 10ex;
+}
+
+input {
+    width: 90%;
+}
+
+input[type="radio"] {
+    width: auto;
+}
+
+table {
+    margin-top: 1ex;
+}
+
+table td.ceil {
+    vertical-align: top;
+}
+
+table td.coordinate {
+    text-align: right;
+}
+
+#width {
+    height: 2ex;
+    width: 20ex;
+}
+
+#height {
+    writing-mode: bt-lr; /* for IE */
+    -webkit-appearance: slider-vertical; /* for WebKit */
+    width: 2ex;
+    height: 20ex;
+}
+
+#width_value {
+    display: none;
+}
+
+#height_value {
+    display: none;
+}
+
+.table .row {
+    margin-bottom: 2ex;
+}
+
+.table .row .cell {
+    margin-bottom: 1ex;
+}
+
+#formula {
+    display: table;
+    margin-bottom: 2ex;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+#formula .row {
+    display: table-row;
+    border: 1px solid gray;
+}
+
+#formula .head {
+    display: none;
+}
+
+#formula .row .cell {
+    margin: 0ex;
+    padding: 0ex 2ex 1ex 3ex;
+}
+
+#formula .row .key {
+    padding: 1ex;
+}
+
+#formula .row .formula {
+    font-family: Times New Roman;
+    font-style: italic;
+    font-size: 130%;
+}
+
+#formula .row .formula span {
+    font-style: normal;
+}
+
+#formula .row .formula sub {
+    font-size: 60%;
+}
+
+canvas {
+    border: 1px solid gray;
+    cursor: move;
+}
+
+@media (min-width: 768px) {
+
+    input[type="text"] {
+        width: 6ex;
+        text-align: right;
+    }
+
+    input[type="range"] {
+        width: 50ex;
+        padding: 0ex;
+    }
+
+    #pattern {
+        width: auto;
+        text-align: left;
+    }
+
+    #width_value {
+        display: inline;
+    }
+
+    #height_value {
+        display: inline;
+    }
+
+    #color_init, #color_step {
+        width: 10ex;
+        text-align: left;
+    }
+
+    .table {
+        display: table;
+    }
+
+    .table .row {
+        display: table-row;
+    }
+
+    .table .row .cell {
+        display: table-cell;
+        padding: 0ex 0.5ex;
+        vertical-align: middle;
+    }
+
+    #config .row .cell {
+        padding-top: 1ex;
+    }
+
+    #formula .head {
+        display: table-row;
+    }
+
+    #formula .row .cell {
+        border: 1px solid gray;
+        padding: 1ex;
+    }
+
+    #formula .head .cell {
+        padding: 0.3ex 1ex;
+        text-align: center;
+        font-weight: bold;
+    }
+
+}
+

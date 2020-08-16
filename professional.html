@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./professional.css">
+<script src="./professional.js"></script>
+<title>Siteswap Art</title>
+</head>
+
+<body>
+<nav id="top">
+<span><a href="./simple.html">Simple</a></span>
+<span><a href="./standard.html">Standard</a></span>
+<span>Professional</span>
+<span><a href="./gallery/">Gallery</a></span>
+</nav>
+
+<article>
+
+<h1>Siteswap Art - Professional version</h1>
+<div class="table" id="input">
+  <div class="row">
+    <div class="cell"><label for="pattern">Pattern</label></div>
+    <div class="cell"><input type="text" id="pattern" value="3"></div>
+  </div>
+</div>
+
+<table>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="range" id="width" min="100" max="990" step="10" value="300"></td>
+    <td><input type="text" id="width_value" value="300"></td>
+  </tr>
+  <tr>
+    <td class="ceil"><input type="range" orient="vertical" id="height" min="-990" max="-100" step="10" value="-300"></td>
+    <td><canvas id="board" width="300" height="300"></canvas></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><input type="text" id="height_value" value="300"></td>
+    <td class="coordinate">Center <span id="center">(0,0)</span></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<div class="table" id="config">
+  <div class="row">
+    <div class="cell"><label for="count_value">Number of segments</label></div>
+    <div class="cell"><input type="range" id="count" min="0" max="36" step="1" value="18"></div>
+    <div class="cell"><input type="text" id="count_value" value="200"></div>
+  </div>
+  <div class="row">
+    <div class="cell"><label for="constant_value">Increase in length (C)</label></div>
+    <div class="cell"><input type="range" id="constant" min="-27" max="27" step="1" value="0"></div>
+    <div class="cell"><input type="text" id="constant_value" value="1"></div>
+  </div>
+  <div class="row">
+    <div class="cell"><label for="delta_value">Increase in angle (D)</label></div>
+    <div class="cell"><input type="range" id="delta" min="-180" max="180" step="1" value="10"></div>
+    <div class="cell"><input type="text" id="delta_value" value="10"></div>
+  </div>
+  <div class="row">
+    <div class="cell"><label for="color_init">Initial color value</label></div>
+    <div class="cell">#<input type="text" id="color_init" value="000000"></div>
+  </div>
+  <div class="row">
+    <div class="cell"><label for="color_step">Increase in color</label></div>
+    <div class="cell">#<input type="text" id="color_step" value="000000"></div>
+  </div>
+</div>
+
+<h2>Formulas for drawing</h2>
+<div class="table" id="formula">
+  <div class="row head">
+    <div class="cell">type</div>
+    <div class="cell">polar coordinate</div>
+    <div class="cell">rectangular coordinate</div>
+  </div>
+  <div class="row">
+    <div class="cell key"><input type="radio" id="spiral" name="method" value="spiral" checked="checked"><label for="spiral">vortex</label></div>
+    <div class="cell formula">r<sub><span>0</span></sub> <span>=</span> <span>0</span>,&nbsp; r<sub>i</sub> <span>=</span> r<sub>i <span>&minus;</span> <span>1</span></sub> <span>&plus;</span> C<br>&theta;<sub><span>0</span></sub> <span>=</span> <span>0</span>,&nbsp; &theta;<sub>i</sub> <span>=</span> &theta;<sub>i <span>&minus;</span> <span>1</span></sub> <span>&plus;</span> a<sub>i</sub> <span>&times;</span> D</div>
+    <div class="cell formula">x<sub>i</sub> <span>=</span> r<sub>i</sub> <span>&times;</span> <span>cos</span> &theta;<sub>i</sub><br>y<sub>i</sub> <span>=</span> r<sub>i</sub> <span>&times;</span> <span>sin</span> &theta;<sub>i</sub></div>
+  </div>
+  <div class="row">
+    <div class="cell key"><input type="radio" id="screw" name="method" value="screw"><label for="screw">spiral projection</label></div>
+    <div class="cell formula">r<sub>i</sub> <span>=</span> C<br>&theta;<sub>i</sub> <span>=</span> a<sub>i</sub> <span>&times;</span> D</div>
+    <div class="cell formula">x<sub><span>0</span></sub> <span>=</span> <span>0</span>,&nbsp; x<sub>i</sub> <span>=</span> x<sub>i <span>&minus;</span> <span>1</span></sub> <span>&plus;</span> r<sub>i</sub> <span>&times;</span> <span>cos</span> &theta;<sub>i</sub><br>y<sub><span>0</span></sub> <span>=</span> <span>0</span>,&nbsp; y<sub>i</sub> <span>=</span> y<sub>i <span>&minus;</span> <span>1</span></sub> <span>&plus;</span> r<sub>i</sub> <span>&times;</span> <span>sin</span> &theta;<sub>i</sub></div>
+  </div>
+  <div class="row">
+    <div class="cell key"><input type="radio" id="spectral" name="method" value="spectral"><label for="spectral">spectrum</label></div>
+    <div class="cell">(not applicable)</div>
+    <div class="cell formula">x<sub>i</sub> <span>=</span> i <span>&times;</span> C<br>y<sub>i</sub> <span>=</span> a<sub>i</sub> <span>&times;</span> D</div>
+  </div>
+</div>
+
+</article>
+</body>
+
+</html>

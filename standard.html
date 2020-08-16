@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./standard.css">
+<script src="./standard.js"></script>
+<title>Siteswap Art</title>
+</head>
+
+<body>
+<nav id="top">
+<span><a href="./simple.html">Simple</a></span>
+<span>Standard</span>
+<span><a href="./professional.html">Professional</a></span>
+<span><a href="./gallery/">Gallery</a></span>
+</nav>
+
+<article>
+
+<h1>Siteswap Art - Standard version</h1>
+<div class="table" id="input">
+  <div class="row">
+    <div class="cell"><label for="pattern">Pattern</label></div>
+    <div class="cell"><input type="text" id="pattern" value="3"></div>
+    <div class="cell"><input type="button" id="draw" value="Draw"></div>
+  </div>
+</div>
+
+<table>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="range" id="width" min="100" max="990" step="10" value="300"></td>
+    <td><span id="width_value">300</span></td>
+  </tr>
+  <tr>
+    <td class="ceil"><input type="range" orient="vertical" id="height" min="-990" max="-100" step="10" value="-300"></td>
+    <td><canvas id="board" width="300" height="300"></canvas></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><span id="height_value">300</span></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<div class="table" id="config">
+  <div class="row">
+    <div class="cell">Number of segments</div>
+    <div class="cell"><input type="range" id="count" min="10" max="990" step="10" value="200"></div>
+    <div class="cell number"><span id="count_value">200</span></div>
+  </div>
+  <div class="row">
+    <div class="cell">Increase in length (C)</div>
+    <div class="cell"><input type="range" id="constant" min="-9" max="9" step="1" value="0"></div>
+    <div class="cell number"><span id="constant_value">1</span></div>
+  </div>
+  <div class="row">
+    <div class="cell">Increase in angle (D)</div>
+    <div class="cell"><input type="range" id="delta" min="0" max="90" step="1" value="10"></div>
+    <div class="cell number"><span id="delta_value">10</span></div>
+  </div>
+</div>
+
+</article>
+</body>
+
+</html>

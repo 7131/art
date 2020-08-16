@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+nav span {
+    margin-right: 1ex;
+}
+
+article {
+    margin-bottom: 10ex;
+}
+
+input {
+    width: 90%;
+}
+
+#block {
+    margin-top: 3ex;
+}
+
+.table .row .cell {
+    margin-bottom: 1ex;
+}
+
+canvas {
+    border: 1px solid gray;
+}
+
+@media (min-width: 768px) {
+
+    input {
+        width: auto;
+    }
+
+    .table {
+        display: table;
+    }
+
+    .table .row {
+        display: table-row;
+    }
+
+    .table .row .cell {
+        display: table-cell;
+        padding: 0ex 0.5ex;
+        vertical-align: middle;
+    }
+
+}
+
