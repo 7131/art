@@ -34,16 +34,16 @@ Finally, they are plotted on the canvas and you can get the siteswap as a graphi
   <dt>standard.js</dt>
     <dd>This is a controller that receives the input of the standard version and outputs the resulting graphic.</dd>
   <dt>professional.html</dt>
-    <dd>This is the professional version page. The range of values​that can be specified for C and D is large. In addition, you can set color and change the drawing formula.</dd>
+    <dd>This is the professional version page. The range of values that can be specified for C and D is large. In addition, you can set color and change the drawing formula.</dd>
   <dt>professional.css</dt>
     <dd>The style sheet for the professional version.</dd>
   <dt>professional.js</dt>
     <dd>This is a controller that receives the input of the professional version and outputs the resulting graphic.</dd>
-  <dt>gallery/index.html</dt>
+  <dt>gallery / index.html</dt>
     <dd>This page is a list of the art created in the professional version.</dd>
-  <dt>gallery/gallery.css</dt>
+  <dt>gallery / gallery.css</dt>
     <dd>The style sheet for the art list page.</dd>
-  <dt>gallery/*.png</dt>
+  <dt>gallery / *.png</dt>
     <dd>Various siteswap art graphics saved as PNG files.</dd>
 </dl>
 
