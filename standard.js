@@ -1,5 +1,5 @@
 // Controller class
-var Controller = function() {
+const Controller = function() {
     this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     window.addEventListener("load", this._initialize.bind(this), false);
 }
@@ -15,12 +15,12 @@ Controller.prototype = {
         this._countLabel = document.getElementById("count_value");
         this._constantLabel = document.getElementById("constant_value");
         this._deltaLabel = document.getElementById("delta_value");
-        var drawButton = document.getElementById("draw");
-        var widthRange = document.getElementById("width");
-        var heightRange = document.getElementById("height");
-        var countRange = document.getElementById("count");
-        var constantRange = document.getElementById("constant");
-        var deltaRange = document.getElementById("delta");
+        const drawButton = document.getElementById("draw");
+        const widthRange = document.getElementById("width");
+        const heightRange = document.getElementById("height");
+        const countRange = document.getElementById("count");
+        const constantRange = document.getElementById("constant");
+        const deltaRange = document.getElementById("delta");
 
         // events for WebKit
         widthRange.addEventListener("input", this._showValue.bind(this), false);
@@ -57,7 +57,7 @@ Controller.prototype = {
     // show the slider value
     "_showValue": function(e) {
         // get the slider value
-        var value = e.srcElement.value;
+        let value = e.srcElement.value;
         if (e.srcElement.id == "height") {
             // vertical slider
             value = -value;
@@ -70,12 +70,12 @@ Controller.prototype = {
     // show the scale value
     "_showScale": function(e) {
         // get the slider value
-        var value = e.srcElement.value;
-        var scale = Math.floor(value / 9);
-        var number = (value % 9) + 1;
+        const value = e.srcElement.value;
+        let scale = Math.floor(value / 9);
+        let number = (value % 9) + 1;
 
         // convert to scale value (treated as a string due to error)
-        var text;
+        let text;
         if (value < 0) {
             // less than 1
             scale++;
@@ -104,7 +104,7 @@ Controller.prototype = {
 
     // change the canvas size
     "_changeSize": function(e) {
-        var value = e.srcElement.value;
+        const value = e.srcElement.value;
         if (e.srcElement.id == "height") {
             this._boardCanvas.height = -value;
         } else {
@@ -115,25 +115,25 @@ Controller.prototype = {
     // "Draw" button process
     "_draw": function() {
         // get settings
-        var count = parseInt(this._countLabel.textContent);
-        var constant = parseFloat(this._constantLabel.textContent);
-        var delta = parseInt(this._deltaLabel.textContent);
+        const count = parseInt(this._countLabel.textContent);
+        const constant = parseFloat(this._constantLabel.textContent);
+        const delta = parseInt(this._deltaLabel.textContent);
 
         // get the pattern
-        var pattern = this._patternText.value;
-        var numbers = this._createNumbers(pattern);
-        var points = this._createPoints(numbers, count, constant, delta);
+        const pattern = this._patternText.value;
+        const numbers = this._createNumbers(pattern);
+        const points = this._createPoints(numbers, count, constant, delta);
 
         // get drawing context
-        var context = this._boardCanvas.getContext("2d");
+        const context = this._boardCanvas.getContext("2d");
         context.clearRect(0, 0, this._boardCanvas.width, this._boardCanvas.height);
         context.beginPath();
 
         // draw line segments
-        var cx = this._boardCanvas.width / 2;
-        var cy = this._boardCanvas.height / 2;
+        const cx = this._boardCanvas.width / 2;
+        const cy = this._boardCanvas.height / 2;
         context.moveTo(cx + points[0].x, cy - points[0].y);
-        for (var i = 1; i < points.length; i++) {
+        for (let i = 1; i < points.length; i++) {
             context.lineTo(cx + points[i].x, cy - points[i].y);
         }
         context.stroke();
@@ -141,12 +141,12 @@ Controller.prototype = {
 
     // create numbers
     "_createNumbers": function(pattern) {
-        var numbers = [];
+        const numbers = [];
 
         // convert string to numeric array
         pattern = pattern.toLowerCase();
-        for (var i = 0; i < pattern.length; i++) {
-            var number = this._alphabet.indexOf(pattern[i]);
+        for (let i = 0; i < pattern.length; i++) {
+            const number = this._alphabet.indexOf(pattern[i]);
             if (0 <= number) {
                 numbers.push(number);
             }
@@ -156,18 +156,18 @@ Controller.prototype = {
 
     // create points
     "_createPoints": function(numbers, count, constant, angle) {
-        var index = 0;
-        var delta = Math.PI * 2 * angle / 360;
-        var radius = 0;
-        var theta = 0;
-        var points = [ new Point(0, 0) ];
+        const delta = Math.PI * 2 * angle / 360;
+        let index = 0;
+        let radius = 0;
+        let theta = 0;
 
         // polar coordinate transformation
-        for (var i = 0; i < count; i++) {
+        const points = [ new Point(0, 0) ];
+        for (let i = 0; i < count; i++) {
             radius += constant;
             theta += numbers[index] * delta;
-            var px = radius * Math.cos(theta);
-            var py = radius * Math.sin(theta);
+            const px = radius * Math.cos(theta);
+            const py = radius * Math.sin(theta);
             points.push(new Point(px, py));
             index = (index + 1) % numbers.length;
         }
@@ -177,7 +177,7 @@ Controller.prototype = {
 }
 
 // Point class
-var Point = function(x, y) {
+const Point = function(x, y) {
     this.x = x;
     this.y = y;
 }

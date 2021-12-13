@@ -1,5 +1,5 @@
 // Controller class
-var Controller = function() {
+const Controller = function() {
     this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     window.addEventListener("load", this._initialize.bind(this), false);
 }
@@ -12,7 +12,7 @@ Controller.prototype = {
         // DOM elements
         this._patternText = document.getElementById("pattern");
         this._boardCanvas = document.getElementById("board");
-        var drawButton = document.getElementById("draw");
+        const drawButton = document.getElementById("draw");
 
         // button events
         drawButton.addEventListener("click", this._draw.bind(this), false);
@@ -21,19 +21,19 @@ Controller.prototype = {
     // "Draw" button process
     "_draw": function() {
         // get the pattern
-        var numbers = this._createNumbers(this._patternText.value);
-        var points = this._createPoints(numbers);
+        const numbers = this._createNumbers(this._patternText.value);
+        const points = this._createPoints(numbers);
 
         // get drawing context
-        var context = this._boardCanvas.getContext("2d");
+        const context = this._boardCanvas.getContext("2d");
         context.clearRect(0, 0, this._boardCanvas.width, this._boardCanvas.height);
         context.beginPath();
 
         // draw line segments
-        var cx = this._boardCanvas.width / 2;
-        var cy = this._boardCanvas.height / 2;
+        const cx = this._boardCanvas.width / 2;
+        const cy = this._boardCanvas.height / 2;
         context.moveTo(cx + points[0].x, cy - points[0].y);
-        for (var i = 1; i < points.length; i++) {
+        for (let i = 1; i < points.length; i++) {
             context.lineTo(cx + points[i].x, cy - points[i].y);
         }
         context.stroke();
@@ -41,12 +41,12 @@ Controller.prototype = {
 
     // create numbers
     "_createNumbers": function(pattern) {
-        var numbers = [];
+        const numbers = [];
 
         // convert string to numeric array
         pattern = pattern.toLowerCase();
-        for (var i = 0; i < pattern.length; i++) {
-            var number = this._alphabet.indexOf(pattern[i]);
+        for (let i = 0; i < pattern.length; i++) {
+            const number = this._alphabet.indexOf(pattern[i]);
             if (0 <= number) {
                 numbers.push(number);
             }
@@ -56,19 +56,19 @@ Controller.prototype = {
 
     // create points
     "_createPoints": function(numbers) {
-        var count = 200;
-        var index = 0;
-        var delta = Math.PI * 2 / 36;
-        var radius = 0;
-        var theta = 0;
-        var points = [ new Point(0, 0) ];
+        const count = 200;
+        const delta = Math.PI * 2 / 36;
+        let index = 0;
+        let radius = 0;
+        let theta = 0;
 
         // polar coordinate transformation
-        for (var i = 0; i < count; i++) {
+        const points = [ new Point(0, 0) ];
+        for (let i = 0; i < count; i++) {
             radius++;
             theta += numbers[index] * delta;
-            var px = radius * Math.cos(theta);
-            var py = radius * Math.sin(theta);
+            const px = radius * Math.cos(theta);
+            const py = radius * Math.sin(theta);
             points.push(new Point(px, py));
             index = (index + 1) % numbers.length;
         }
@@ -78,7 +78,7 @@ Controller.prototype = {
 }
 
 // Point class
-var Point = function(x, y) {
+const Point = function(x, y) {
     this.x = x;
     this.y = y;
 }

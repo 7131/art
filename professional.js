@@ -1,5 +1,5 @@
 // Controller class
-var Controller = function() {
+const Controller = function() {
     // fields
     this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     this._mouse = new Point(0, 0);
@@ -25,11 +25,11 @@ Controller.prototype = {
         this._deltaText = document.getElementById("delta_value");
         this._colorInit = document.getElementById("color_init");
         this._colorStep = document.getElementById("color_step");
-        var widthRange = document.getElementById("width");
-        var heightRange = document.getElementById("height");
-        var countRange = document.getElementById("count");
-        var constantRange = document.getElementById("constant");
-        var deltaRange = document.getElementById("delta");
+        const widthRange = document.getElementById("width");
+        const heightRange = document.getElementById("height");
+        const countRange = document.getElementById("count");
+        const constantRange = document.getElementById("constant");
+        const deltaRange = document.getElementById("delta");
 
         // events for WebKit
         widthRange.addEventListener("input", this._showValue.bind(this), false);
@@ -85,8 +85,8 @@ Controller.prototype = {
         this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this), false);
 
         // radio button
-        var methods = document.getElementsByName("method");
-        for (var i = 0; i < methods.length; i++) {
+        const methods = document.getElementsByName("method");
+        for (let i = 0; i < methods.length; i++) {
             methods[i].addEventListener("change", this._draw.bind(this), false);
         }
 
@@ -97,7 +97,7 @@ Controller.prototype = {
     // show the slider value
     "_showValue": function(e) {
         // get the slider value
-        var value = e.srcElement.value;
+        let value = e.srcElement.value;
         if (e.srcElement.id == "height") {
             // vertical slider
             value = -value;
@@ -109,19 +109,19 @@ Controller.prototype = {
 
     // show the scale value
     "_showScale": function(e) {
-        var scale = this._toScale(e.srcElement.value);
+        const scale = this._toScale(e.srcElement.value);
         document.getElementById(e.srcElement.id + "_value").value = scale;
     },
 
     // convert integer to scale value
     "_toScale": function(input) {
         // get the integer value
-        var value = parseInt(input);
-        var scale = Math.floor(value / 9);
-        var number = (value % 9) + 1;
+        const value = parseInt(input);
+        let scale = Math.floor(value / 9);
+        let number = (value % 9) + 1;
 
         // convert to scale value (treated as a string due to error)
-        var text;
+        let text;
         if (value < 0) {
             // less than 1
             scale++;
@@ -149,8 +149,8 @@ Controller.prototype = {
     // convert from scale value to integer
     "_fromScale": function(input) {
         // get the scale value
-        var text = "" + parseFloat(input);
-        var scale = 0;
+        let text = "" + parseFloat(input);
+        let scale = 0;
         if (/^0\./.test(text)) {
             // less than 1
             scale--;
@@ -166,18 +166,18 @@ Controller.prototype = {
                 text = text.slice(0, -1);
             }
         }
-        var number = parseInt(text.slice(0, 1));
+        const number = parseInt(text.slice(0, 1));
         return scale * 9 + number - 1;
     },
 
     // set the value to the slider
     "_setValueSlider": function(e) {
         // get the slider
-        var id = e.srcElement.id.replace(/_value$/, "");
-        var slider = document.getElementById(id);
+        const id = e.srcElement.id.replace(/_value$/, "");
+        const slider = document.getElementById(id);
 
         // get the value
-        var value = parseInt(e.srcElement.value);
+        let value = parseInt(e.srcElement.value);
 
         // set to the slider
         if (id == "height") {
@@ -197,8 +197,8 @@ Controller.prototype = {
     // convert value to scale and set on slider
     "_setScaleSlider": function(e) {
         // get the slider
-        var id = e.srcElement.id.replace(/_value$/, "");
-        var slider = document.getElementById(id);
+        const id = e.srcElement.id.replace(/_value$/, "");
+        const slider = document.getElementById(id);
 
         // set to the slider
         slider.value = this._fromScale(e.srcElement.value);
@@ -210,8 +210,8 @@ Controller.prototype = {
     // resize
     "_changeSize": function() {
         // get the settings
-        var width = parseInt(this._widthText.value);
-        var height = parseInt(this._heightText.value);
+        const width = parseInt(this._widthText.value);
+        const height = parseInt(this._heightText.value);
 
         // change the drawing size
         this._boardCanvas.width = width;
@@ -246,12 +246,12 @@ Controller.prototype = {
         }
 
         // coordinate calculation
-        var current = new Point(0, 0);
+        const current = new Point(0, 0);
         current.x = Math.round(e.pageX);
         current.y = Math.round(e.pageY);
 
         // draw
-        var diff = new Point(current.x - this._mouse.x, this._mouse.y - current.y);
+        const diff = new Point(current.x - this._mouse.x, this._mouse.y - current.y);
         diff.addPoint(this._center);
         this._centerLabel.textContent = diff.toString();
         this._draw();
@@ -263,8 +263,8 @@ Controller.prototype = {
         if (e.targetTouches.length != 2) {
             return;
         }
-        var first = e.targetTouches[0];
-        var second = e.targetTouches[1];
+        const first = e.targetTouches[0];
+        const second = e.targetTouches[1];
         if (first.offsetX < 0 || this._boardCanvas.width < first.offsetX || first.offsetY < 0 || this._boardCanvas.height < first.offsetY) {
             return;
         }
@@ -274,12 +274,12 @@ Controller.prototype = {
         e.preventDefault();
 
         // coordinate calculation
-        var current = new Point(0, 0);
+        const current = new Point(0, 0);
         current.x = Math.round(e.touches[0].pageX);
         current.y = Math.round(e.touches[0].pageY);
 
         // draw
-        var diff = new Point(current.x - this._mouse.x, this._mouse.y - current.y);
+        const diff = new Point(current.x - this._mouse.x, this._mouse.y - current.y);
         diff.addPoint(this._center);
         this._centerLabel.textContent = diff.toString();
         this._draw();
@@ -288,38 +288,38 @@ Controller.prototype = {
     // draw
     "_draw": function() {
         // get the settings
-        var count = parseInt(this._countText.value);
-        var center = this._createPoint(this._centerLabel.textContent);
-        var constant = parseFloat(this._constantText.value);
-        var delta = parseInt(this._deltaText.value);
-        var color = this._createColor("#" + this._colorInit.value);
-        var step = this._createColor("#" + this._colorStep.value);
+        const count = parseInt(this._countText.value);
+        const center = this._createPoint(this._centerLabel.textContent);
+        const constant = parseFloat(this._constantText.value);
+        const delta = parseInt(this._deltaText.value);
+        const color = this._createColor("#" + this._colorInit.value);
+        const step = this._createColor("#" + this._colorStep.value);
 
         // formulas for drawing
-        var radios = document.getElementsByName("method");
-        var method = "";
-        for (var i = 0; i < radios.length; i++) {
+        const radios = document.getElementsByName("method");
+        let method = "";
+        for (let i = 0; i < radios.length; i++) {
             if (radios[i].checked) {
                 method = radios[i].value;
             }
         }
-        var creator = new PointCreator(method);
+        const creator = new PointCreator(method);
 
         // get the pattern
-        var pattern = this._patternText.value;
-        var numbers = this._createNumbers(pattern);
-        var points = creator.create(numbers, count, constant, delta);
+        const pattern = this._patternText.value;
+        const numbers = this._createNumbers(pattern);
+        const points = creator.create(numbers, count, constant, delta);
 
         // get drawing context
-        var context = this._boardCanvas.getContext("2d");
+        const context = this._boardCanvas.getContext("2d");
         context.clearRect(0, 0, this._boardCanvas.width, this._boardCanvas.height);
 
         // draw line segments
         center.x = this._boardCanvas.width / 2 + center.x;
         center.y = this._boardCanvas.height / 2 - center.y;
-        var x = center.x + points[0].x;
-        var y = center.y - points[0].y;
-        for (var i = 1; i < points.length; i++) {
+        let x = center.x + points[0].x;
+        let y = center.y - points[0].y;
+        for (let i = 1; i < points.length; i++) {
             context.beginPath();
             context.moveTo(x, y);
             context.strokeStyle = color.toHex();
@@ -333,12 +333,12 @@ Controller.prototype = {
 
     // create numbers
     "_createNumbers": function(pattern) {
-        var numbers = [];
+        const numbers = [];
 
         // convert string to numeric array
         pattern = pattern.toLowerCase();
-        for (var i = 0; i < pattern.length; i++) {
-            var number = this._alphabet.indexOf(pattern[i]);
+        for (let i = 0; i < pattern.length; i++) {
+            const number = this._alphabet.indexOf(pattern[i]);
             if (0 <= number) {
                 numbers.push(number);
             }
@@ -349,36 +349,36 @@ Controller.prototype = {
     // create point class from coordinate string
     "_createPoint": function(text) {
         // check the arguments
-        var match = /^\(([^,]+),([^,]+)\)$/.exec(text);
+        const match = /^\(([^,]+),([^,]+)\)$/.exec(text);
         if (!match) {
             return new Point(0, 0);
         }
 
         // coordinate calculation
-        var x = parseInt(match[1]);
-        var y = parseInt(match[2]);
+        const x = parseInt(match[1]);
+        const y = parseInt(match[2]);
         return new Point(x, y);
     },
 
     // create color class from hexadecimal string
     "_createColor": function(text) {
         // check the arguments
-        var lower = text.trim().toLowerCase();
+        const lower = text.trim().toLowerCase();
         if (!/^#[0-9a-f]{6}$/.test(lower)) {
             return new Color(0, 0, 0);
         }
 
         // get RGB value
-        var r = parseInt(lower.substr(1, 2), 16);
-        var g = parseInt(lower.substr(3, 2), 16);
-        var b = parseInt(lower.substr(5, 2), 16);
+        const r = parseInt(lower.substr(1, 2), 16);
+        const g = parseInt(lower.substr(3, 2), 16);
+        const b = parseInt(lower.substr(5, 2), 16);
         return new Color(r, g, b);
     },
 
 }
 
 // Point creator class
-var PointCreator = function(method) {
+const PointCreator = function(method) {
     switch (method) {
         case "spectral":
             this.create = this._createSpectral;
@@ -397,14 +397,14 @@ PointCreator.prototype = {
 
     // create spectral coordinates
     "_createSpectral": function(numbers, count, constant, angle) {
-        var index = 0;
-        var delta = angle;
-        var points = [];
+        const delta = angle;
+        let index = 0;
 
         // polar coordinate transformation
-        for (var i = 0; i < count; i++) {
-            var px = i * constant;
-            var py = numbers[index] * delta;
+        const points = [];
+        for (let i = 0; i < count; i++) {
+            const px = i * constant;
+            const py = numbers[index] * delta;
             points.push(new Point(px, py));
             index = (index + 1) % numbers.length;
         }
@@ -413,16 +413,16 @@ PointCreator.prototype = {
 
     // create screw projective coordinates
     "_createScrew": function(numbers, count, constant, angle) {
-        var index = 0;
-        var delta = Math.PI * 2 * angle / 360;
-        var px = 0;
-        var py = 0;
-        var points = [ new Point(px, py) ];
+        const delta = Math.PI * 2 * angle / 360;
+        let index = 0;
+        let px = 0;
+        let py = 0;
 
         // polar coordinate transformation
-        for (var i = 0; i < count; i++) {
-            var radius = constant;
-            var theta = numbers[index] * delta;
+        const points = [ new Point(px, py) ];
+        for (let i = 0; i < count; i++) {
+            const radius = constant;
+            const theta = numbers[index] * delta;
             px += radius * Math.cos(theta);
             py += radius * Math.sin(theta);
             points.push(new Point(px, py));
@@ -433,18 +433,18 @@ PointCreator.prototype = {
 
     // create spiral coordinates
     "_createSpiral": function(numbers, count, constant, angle) {
-        var index = 0;
-        var delta = Math.PI * 2 * angle / 360;
-        var radius = 0;
-        var theta = 0;
-        var points = [ new Point(0, 0) ];
+        const delta = Math.PI * 2 * angle / 360;
+        let index = 0;
+        let radius = 0;
+        let theta = 0;
 
         // polar coordinate transformation
-        for (var i = 0; i < count; i++) {
+        const points = [ new Point(0, 0) ];
+        for (let i = 0; i < count; i++) {
             radius += constant;
             theta += numbers[index] * delta;
-            var px = radius * Math.cos(theta);
-            var py = radius * Math.sin(theta);
+            const px = radius * Math.cos(theta);
+            const py = radius * Math.sin(theta);
             points.push(new Point(px, py));
             index = (index + 1) % numbers.length;
         }
@@ -454,7 +454,7 @@ PointCreator.prototype = {
 }
 
 // Point class
-var Point = function(x, y) {
+const Point = function(x, y) {
     this.x = x;
     this.y = y;
 }
@@ -476,7 +476,7 @@ Point.prototype = {
 }
 
 // Color class
-var Color = function(r, g, b) {
+const Color = function(r, g, b) {
     this.r = r % 256;
     this.g = g % 256;
     this.b = b % 256;
@@ -494,9 +494,9 @@ Color.prototype = {
 
     // get hexadecimal string
     "toHex": function() {
-        var r = ("0" + this.r.toString(16)).slice(-2);
-        var g = ("0" + this.g.toString(16)).slice(-2);
-        var b = ("0" + this.b.toString(16)).slice(-2);
+        const r = ("0" + this.r.toString(16)).slice(-2);
+        const g = ("0" + this.g.toString(16)).slice(-2);
+        const b = ("0" + this.b.toString(16)).slice(-2);
         return "#" + r + g + b;
     },
 
