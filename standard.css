@@ -5,6 +5,7 @@ nav span {
 }
 
 article {
+    line-height: 1.8;
     margin-bottom: 10ex;
 }
 
@@ -53,6 +54,10 @@ canvas {
 }
 
 @media (min-width: 768px) {
+
+    article {
+        line-height: 1.5;
+    }
 
     input {
         width: auto;
