@@ -13,6 +13,11 @@ input {
     width: 90%;
 }
 
+button {
+    margin-top: 2ex;
+    width: 90%;
+}
+
 table {
     margin-top: 1ex;
 }
@@ -66,6 +71,11 @@ canvas {
     input[type="range"] {
         width: 50ex;
         padding: 0ex;
+    }
+
+    button {
+        margin-top: 0ex;
+        width: auto;
     }
 
     #width_value {

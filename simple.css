@@ -13,6 +13,11 @@ input {
     width: 90%;
 }
 
+button {
+    margin-top: 2ex;
+    width: 90%;
+}
+
 #block {
     margin-top: 3ex;
 }
@@ -32,6 +37,11 @@ canvas {
     }
 
     input {
+        width: auto;
+    }
+
+    button {
+        margin-top: 0ex;
         width: auto;
     }
 
