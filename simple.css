@@ -10,53 +10,62 @@ article {
 }
 
 input {
-    width: 90%;
+    width: 90vw;
 }
 
 button {
     margin-top: 2ex;
-    width: 90%;
+    width: 90vw;
 }
 
-#block {
-    margin-top: 3ex;
+canvas {
+    margin-top: 2ex;
+    border: 1px solid gray;
 }
 
 .table .row .cell {
     margin-bottom: 1ex;
 }
 
-canvas {
-    border: 1px solid gray;
-}
-
-@media (min-width: 768px) {
+@media (orientation: landscape) {
 
     article {
         line-height: 1.5;
     }
 
     input {
-        width: auto;
+        width: 90vh;
     }
 
     button {
-        margin-top: 0ex;
-        width: auto;
+        width: 90vh;
     }
 
-    .table {
-        display: table;
-    }
+    @media (min-width: 768px) {
 
-    .table .row {
-        display: table-row;
-    }
+        input {
+            width: auto;
+        }
 
-    .table .row .cell {
-        display: table-cell;
-        padding: 0ex 0.5ex;
-        vertical-align: middle;
+        button {
+            margin-top: 0ex;
+            width: auto;
+        }
+
+        .table {
+            display: table;
+        }
+
+        .table .row {
+            display: table-row;
+        }
+
+        .table .row .cell {
+            display: table-cell;
+            padding: 0ex 0.5ex;
+            vertical-align: middle;
+        }
+
     }
 
 }

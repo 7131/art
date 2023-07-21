@@ -10,12 +10,12 @@ article {
 }
 
 input {
-    width: 90%;
+    width: 90vw;
 }
 
 button {
     margin-top: 2ex;
-    width: 90%;
+    width: 90vw;
 }
 
 table {
@@ -32,8 +32,7 @@ table td.ceil {
 }
 
 #height {
-    writing-mode: bt-lr; /* for IE */
-    -webkit-appearance: slider-vertical; /* for WebKit */
+    -webkit-appearance: slider-vertical;
     width: 2ex;
     height: 20ex;
 }
@@ -58,54 +57,66 @@ canvas {
     border: 1px solid gray;
 }
 
-@media (min-width: 768px) {
+@media (orientation: landscape) {
 
     article {
         line-height: 1.5;
     }
 
     input {
-        width: auto;
-    }
-
-    input[type="range"] {
-        width: 50ex;
-        padding: 0ex;
+        width: 90vh;
     }
 
     button {
-        margin-top: 0ex;
-        width: auto;
+        width: 90vh;
     }
 
-    #width_value {
-        display: inline;
-    }
+    @media (min-width: 768px) {
 
-    #height_value {
-        display: inline;
-    }
+        input {
+            width: auto;
+        }
 
-    .table {
-        display: table;
-    }
+        input[type="range"] {
+            width: 50ex;
+            padding: 0ex;
+        }
 
-    .table .row {
-        display: table-row;
-    }
+        button {
+            margin-top: 0ex;
+            width: auto;
+        }
 
-    .table .row .cell {
-        display: table-cell;
-        padding: 0ex 0.5ex;
-        vertical-align: middle;
-    }
+        #width_value {
+            display: inline;
+        }
 
-    #config .row .cell {
-        padding-top: 1ex;
-    }
+        #height_value {
+            display: inline;
+        }
 
-    #config .row .number {
-        text-align: right;
+        .table {
+            display: table;
+        }
+
+        .table .row {
+            display: table-row;
+        }
+
+        .table .row .cell {
+            display: table-cell;
+            padding: 0ex 0.5ex;
+            vertical-align: middle;
+        }
+
+        #config .row .cell {
+            padding-top: 1ex;
+        }
+
+        #config .row .number {
+            text-align: right;
+        }
+
     }
 
 }

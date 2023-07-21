@@ -10,7 +10,7 @@ article {
 }
 
 input {
-    width: 90%;
+    width: 90vw;
 }
 
 input[type="radio"] {
@@ -35,8 +35,7 @@ table td.coordinate {
 }
 
 #height {
-    writing-mode: bt-lr; /* for IE */
-    -webkit-appearance: slider-vertical; /* for WebKit */
+    -webkit-appearance: slider-vertical;
     width: 2ex;
     height: 20ex;
 }
@@ -101,72 +100,84 @@ canvas {
     cursor: move;
 }
 
-@media (min-width: 768px) {
+@media (orientation: landscape) {
 
     article {
         line-height: 1.5;
     }
 
-    input[type="text"] {
-        width: 6ex;
-        text-align: right;
+    input {
+        width: 90vh;
     }
 
-    input[type="range"] {
-        width: 50ex;
-        padding: 0ex;
+    button {
+        width: 90vh;
     }
 
-    #pattern {
-        width: auto;
-        text-align: left;
+    @media (min-width: 768px) {
+
+        input[type="text"] {
+            width: 6ex;
+            text-align: right;
+        }
+
+        input[type="range"] {
+            width: 50ex;
+            padding: 0ex;
+        }
+
+        #pattern {
+            width: auto;
+            text-align: left;
+        }
+
+        #width_value {
+            display: inline;
+        }
+
+        #height_value {
+            display: inline;
+        }
+
+        #color_init, #color_step {
+            width: 10ex;
+            text-align: left;
+        }
+
+        .table {
+            display: table;
+        }
+
+        .table .row {
+            display: table-row;
+        }
+
+        .table .row .cell {
+            display: table-cell;
+            padding: 0ex 0.5ex;
+            vertical-align: middle;
+        }
+
+        #config .row .cell {
+            padding-top: 1ex;
+        }
+
+        #formula .head {
+            display: table-row;
+        }
+
+        #formula .row .cell {
+            border: 1px solid gray;
+            padding: 1ex;
+        }
+
+        #formula .head .cell {
+            padding: 0.3ex 1ex;
+            text-align: center;
+            font-weight: bold;
+        }
+
     }
 
-    #width_value {
-        display: inline;
-    }
-
-    #height_value {
-        display: inline;
-    }
-
-    #color_init, #color_step {
-        width: 10ex;
-        text-align: left;
-    }
-
-    .table {
-        display: table;
-    }
-
-    .table .row {
-        display: table-row;
-    }
-
-    .table .row .cell {
-        display: table-cell;
-        padding: 0ex 0.5ex;
-        vertical-align: middle;
-    }
-
-    #config .row .cell {
-        padding-top: 1ex;
-    }
-
-    #formula .head {
-        display: table-row;
-    }
-
-    #formula .row .cell {
-        border: 1px solid gray;
-        padding: 1ex;
-    }
-
-    #formula .head .cell {
-        padding: 0.3ex 1ex;
-        text-align: center;
-        font-weight: bold;
-    }
 
 }
-
