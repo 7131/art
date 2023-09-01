@@ -85,9 +85,8 @@ Controller.prototype = {
         this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this), false);
 
         // radio button
-        const methods = document.getElementsByName("method");
-        for (let i = 0; i < methods.length; i++) {
-            methods[i].addEventListener("change", this._draw.bind(this), false);
+        for (const radio of document.getElementsByName("method")) {
+            radio.addEventListener("change", this._draw.bind(this), false);
         }
 
         // initial drawing
@@ -296,11 +295,10 @@ Controller.prototype = {
         const step = this._createColor("#" + this._colorStep.value);
 
         // formulas for drawing
-        const radios = document.getElementsByName("method");
         let method = "";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                method = radios[i].value;
+        for (const radio of document.getElementsByName("method")) {
+            if (radio.checked) {
+                method = radio.value;
             }
         }
         const creator = new PointCreator(method);
@@ -336,9 +334,8 @@ Controller.prototype = {
         const numbers = [];
 
         // convert string to numeric array
-        pattern = pattern.toLowerCase();
-        for (let i = 0; i < pattern.length; i++) {
-            const number = this._alphabet.indexOf(pattern[i]);
+        for (const letter of pattern.toLowerCase()) {
+            const number = this._alphabet.indexOf(letter);
             if (0 <= number) {
                 numbers.push(number);
             }

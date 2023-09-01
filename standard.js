@@ -144,9 +144,8 @@ Controller.prototype = {
         const numbers = [];
 
         // convert string to numeric array
-        pattern = pattern.toLowerCase();
-        for (let i = 0; i < pattern.length; i++) {
-            const number = this._alphabet.indexOf(pattern[i]);
+        for (const letter of pattern.toLowerCase()) {
+            const number = this._alphabet.indexOf(letter);
             if (0 <= number) {
                 numbers.push(number);
             }
