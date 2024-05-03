@@ -366,9 +366,9 @@ Controller.prototype = {
         }
 
         // get RGB value
-        const r = parseInt(lower.substr(1, 2), 16);
-        const g = parseInt(lower.substr(3, 2), 16);
-        const b = parseInt(lower.substr(5, 2), 16);
+        const r = parseInt(lower.substring(1, 3), 16);
+        const g = parseInt(lower.substring(3, 5), 16);
+        const b = parseInt(lower.substring(5, 7), 16);
         return new Color(r, g, b);
     },
 
