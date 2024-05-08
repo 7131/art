@@ -1,14 +1,14 @@
 // Controller class
 const Controller = function() {
     this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
-    window.addEventListener("load", this._initialize.bind(this), false);
+    window.addEventListener("load", this._initialize.bind(this));
 }
 
 // Controller prototype
 Controller.prototype = {
 
     // initialize the private fields
-    "_initialize": function() {
+    "_initialize": function(e) {
         // DOM elements
         this._patternText = document.getElementById("pattern");
         this._boardCanvas = document.getElementById("board");
@@ -23,35 +23,35 @@ Controller.prototype = {
         const deltaRange = document.getElementById("delta");
 
         // events for WebKit
-        widthRange.addEventListener("input", this._showValue.bind(this), false);
-        widthRange.addEventListener("input", this._changeSize.bind(this), false);
-        widthRange.addEventListener("input", this._draw.bind(this), false);
-        heightRange.addEventListener("input", this._showValue.bind(this), false);
-        heightRange.addEventListener("input", this._changeSize.bind(this), false);
-        heightRange.addEventListener("input", this._draw.bind(this), false);
-        countRange.addEventListener("input", this._showValue.bind(this), false);
-        countRange.addEventListener("input", this._draw.bind(this), false);
-        constantRange.addEventListener("input", this._showScale.bind(this), false);
-        constantRange.addEventListener("input", this._draw.bind(this), false);
-        deltaRange.addEventListener("input", this._showValue.bind(this), false);
-        deltaRange.addEventListener("input", this._draw.bind(this), false);
+        widthRange.addEventListener("input", this._showValue.bind(this));
+        widthRange.addEventListener("input", this._changeSize.bind(this));
+        widthRange.addEventListener("input", this._draw.bind(this));
+        heightRange.addEventListener("input", this._showValue.bind(this));
+        heightRange.addEventListener("input", this._changeSize.bind(this));
+        heightRange.addEventListener("input", this._draw.bind(this));
+        countRange.addEventListener("input", this._showValue.bind(this));
+        countRange.addEventListener("input", this._draw.bind(this));
+        constantRange.addEventListener("input", this._showScale.bind(this));
+        constantRange.addEventListener("input", this._draw.bind(this));
+        deltaRange.addEventListener("input", this._showValue.bind(this));
+        deltaRange.addEventListener("input", this._draw.bind(this));
 
         // events for IE
-        widthRange.addEventListener("change", this._showValue.bind(this), false);
-        widthRange.addEventListener("change", this._changeSize.bind(this), false);
-        widthRange.addEventListener("change", this._draw.bind(this), false);
-        heightRange.addEventListener("change", this._showValue.bind(this), false);
-        heightRange.addEventListener("change", this._changeSize.bind(this), false);
-        heightRange.addEventListener("change", this._draw.bind(this), false);
-        countRange.addEventListener("change", this._showValue.bind(this), false);
-        countRange.addEventListener("change", this._draw.bind(this), false);
-        constantRange.addEventListener("change", this._showScale.bind(this), false);
-        constantRange.addEventListener("change", this._draw.bind(this), false);
-        deltaRange.addEventListener("change", this._showValue.bind(this), false);
-        deltaRange.addEventListener("change", this._draw.bind(this), false);
+        widthRange.addEventListener("change", this._showValue.bind(this));
+        widthRange.addEventListener("change", this._changeSize.bind(this));
+        widthRange.addEventListener("change", this._draw.bind(this));
+        heightRange.addEventListener("change", this._showValue.bind(this));
+        heightRange.addEventListener("change", this._changeSize.bind(this));
+        heightRange.addEventListener("change", this._draw.bind(this));
+        countRange.addEventListener("change", this._showValue.bind(this));
+        countRange.addEventListener("change", this._draw.bind(this));
+        constantRange.addEventListener("change", this._showScale.bind(this));
+        constantRange.addEventListener("change", this._draw.bind(this));
+        deltaRange.addEventListener("change", this._showValue.bind(this));
+        deltaRange.addEventListener("change", this._draw.bind(this));
 
         // common events
-        drawButton.addEventListener("click", this._draw.bind(this), false);
+        drawButton.addEventListener("click", this._draw.bind(this));
     },
 
     // show the slider value
@@ -113,7 +113,7 @@ Controller.prototype = {
     },
 
     // "Draw" button process
-    "_draw": function() {
+    "_draw": function(e) {
         // get settings
         const count = parseInt(this._countLabel.textContent);
         const constant = parseFloat(this._constantLabel.textContent);

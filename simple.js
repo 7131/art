@@ -1,25 +1,25 @@
 // Controller class
 const Controller = function() {
     this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
-    window.addEventListener("load", this._initialize.bind(this), false);
+    window.addEventListener("load", this._initialize.bind(this));
 }
 
 // Controller prototype
 Controller.prototype = {
 
     // initialize the private fields
-    "_initialize": function() {
+    "_initialize": function(e) {
         // DOM elements
         this._patternText = document.getElementById("pattern");
         this._boardCanvas = document.getElementById("board");
         const drawButton = document.getElementById("draw");
 
         // button events
-        drawButton.addEventListener("click", this._draw.bind(this), false);
+        drawButton.addEventListener("click", this._draw.bind(this));
     },
 
     // "Draw" button process
-    "_draw": function() {
+    "_draw": function(e) {
         // get the pattern
         const numbers = this._createNumbers(this._patternText.value);
         const points = this._createPoints(numbers);
