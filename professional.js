@@ -95,15 +95,7 @@ Controller.prototype = {
 
     // show the slider value
     "_showValue": function(e) {
-        // get the slider value
-        let value = e.srcElement.value;
-        if (e.srcElement.id == "height") {
-            // vertical slider
-            value = -value;
-        }
-
-        // display in corresponding textbox
-        document.getElementById(e.srcElement.id + "_value").value = value;
+        document.getElementById(e.srcElement.id + "_value").value = e.srcElement.value;
     },
 
     // show the scale value
@@ -176,20 +168,10 @@ Controller.prototype = {
         const slider = document.getElementById(id);
 
         // get the value
-        let value = parseInt(e.srcElement.value);
-
-        // set to the slider
-        if (id == "height") {
-            // vertical slider
-            slider.value = -value;
-            value = -slider.value;
-        } else {
-            // other slider
-            slider.value = value;
-            value = slider.value;
-        }
+        const value = parseInt(e.srcElement.value);
 
         // reset the value
+        slider.value = value;
         e.srcElement.value = value;
     },
 

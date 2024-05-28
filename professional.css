@@ -35,7 +35,7 @@ table td.coordinate {
 }
 
 #height {
-    -webkit-appearance: slider-vertical;
+    writing-mode: vertical-lr;
     width: 2ex;
     height: 20ex;
 }

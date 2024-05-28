@@ -32,7 +32,7 @@ table td.ceil {
 }
 
 #height {
-    -webkit-appearance: slider-vertical;
+    writing-mode: vertical-lr;
     width: 2ex;
     height: 20ex;
 }
@@ -106,7 +106,6 @@ canvas {
         .table .row .cell {
             display: table-cell;
             padding: 0ex 0.5ex;
-            vertical-align: middle;
         }
 
         #config .row .cell {

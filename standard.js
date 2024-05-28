@@ -56,15 +56,7 @@ Controller.prototype = {
 
     // show the slider value
     "_showValue": function(e) {
-        // get the slider value
-        let value = e.srcElement.value;
-        if (e.srcElement.id == "height") {
-            // vertical slider
-            value = -value;
-        }
-
-        // display in corresponding textbox
-        document.getElementById(e.srcElement.id + "_value").textContent = value;
+        document.getElementById(e.srcElement.id + "_value").textContent = e.srcElement.value;
     },
 
     // show the scale value
@@ -104,11 +96,10 @@ Controller.prototype = {
 
     // change the canvas size
     "_changeSize": function(e) {
-        const value = e.srcElement.value;
         if (e.srcElement.id == "height") {
-            this._boardCanvas.height = -value;
+            this._boardCanvas.height = e.srcElement.value;
         } else {
-            this._boardCanvas.width = value;
+            this._boardCanvas.width = e.srcElement.value;
         }
     },
 
