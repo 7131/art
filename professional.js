@@ -107,7 +107,7 @@ Controller.prototype = {
     // convert integer to scale value
     "_toScale": function(input) {
         // get the integer value
-        const value = parseInt(input);
+        const value = parseInt(input, 10);
         let scale = Math.floor(value / 9);
         let number = (value % 9) + 1;
 
@@ -157,7 +157,7 @@ Controller.prototype = {
                 text = text.slice(0, -1);
             }
         }
-        const number = parseInt(text.slice(0, 1));
+        const number = parseInt(text.slice(0, 1), 10);
         return scale * 9 + number - 1;
     },
 
@@ -168,7 +168,7 @@ Controller.prototype = {
         const slider = document.getElementById(id);
 
         // get the value
-        const value = parseInt(e.srcElement.value);
+        const value = parseInt(e.srcElement.value, 10);
 
         // reset the value
         slider.value = value;
@@ -191,8 +191,8 @@ Controller.prototype = {
     // resize
     "_changeSize": function(e) {
         // get the settings
-        const width = parseInt(this._widthText.value);
-        const height = parseInt(this._heightText.value);
+        const width = parseInt(this._widthText.value, 10);
+        const height = parseInt(this._heightText.value, 10);
 
         // change the drawing size
         this._boardCanvas.width = width;
@@ -269,10 +269,10 @@ Controller.prototype = {
     // draw
     "_draw": function(e) {
         // get the settings
-        const count = parseInt(this._countText.value);
+        const count = parseInt(this._countText.value, 10);
         const center = this._createPoint(this._centerLabel.textContent);
         const constant = parseFloat(this._constantText.value);
-        const delta = parseInt(this._deltaText.value);
+        const delta = parseInt(this._deltaText.value, 10);
         const color = this._createColor("#" + this._colorInit.value);
         const step = this._createColor("#" + this._colorStep.value);
 
@@ -334,8 +334,8 @@ Controller.prototype = {
         }
 
         // coordinate calculation
-        const x = parseInt(match[1]);
-        const y = parseInt(match[2]);
+        const x = parseInt(match[1], 10);
+        const y = parseInt(match[2], 10);
         return new Point(x, y);
     },
 

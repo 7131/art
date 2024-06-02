@@ -106,9 +106,9 @@ Controller.prototype = {
     // "Draw" button process
     "_draw": function(e) {
         // get settings
-        const count = parseInt(this._countLabel.textContent);
+        const count = parseInt(this._countLabel.textContent, 10);
         const constant = parseFloat(this._constantLabel.textContent);
-        const delta = parseInt(this._deltaLabel.textContent);
+        const delta = parseInt(this._deltaLabel.textContent, 10);
 
         // get the pattern
         const pattern = this._patternText.value;
