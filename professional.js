@@ -138,26 +138,28 @@ Controller.prototype = {
     },
 
     // convert from scale value to integer
-    "_fromScale": function(input) {
+    "_fromScale": function(input, min) {
         // get the scale value
-        let text = "" + parseFloat(input);
+        let value = parseFloat(input);
+        if (isNaN(value) || value <= 0) {
+            // less than or equal to 0
+            return min;
+        }
         let scale = 0;
-        if (/^0\./.test(text)) {
+        if (value < 1) {
             // less than 1
-            scale--;
-            text = text.slice(2);
-            while (/^0/.test(text)) {
+            while (value < 1) {
                 scale--;
-                text = text.slice(1);
+                value *= 10;
             }
         } else {
             // 1 or more
-            while (/0$/.test(text)) {
+            while (10 <= value) {
                 scale++;
-                text = text.slice(0, -1);
+                value /= 10;
             }
         }
-        const number = parseInt(text.slice(0, 1), 10);
+        const number = Math.floor(value);
         return scale * 9 + number - 1;
     },
 
@@ -168,11 +170,14 @@ Controller.prototype = {
         const slider = document.getElementById(id);
 
         // get the value
-        const value = parseInt(e.srcElement.value, 10);
+        let value = parseInt(e.srcElement.value, 10);
+        if (isNaN(value)) {
+            value = slider.min;
+        }
 
         // reset the value
         slider.value = value;
-        e.srcElement.value = value;
+        e.srcElement.value = slider.value;
     },
 
     // convert value to scale and set on slider
@@ -182,7 +187,7 @@ Controller.prototype = {
         const slider = document.getElementById(id);
 
         // set to the slider
-        slider.value = this._fromScale(e.srcElement.value);
+        slider.value = this._fromScale(e.srcElement.value, slider.min);
 
         // reset the value
         e.srcElement.value = this._toScale(slider.value);
@@ -328,7 +333,7 @@ Controller.prototype = {
     // create point class from coordinate string
     "_createPoint": function(text) {
         // check the arguments
-        const match = /^\(([^,]+),([^,]+)\)$/.exec(text);
+        const match = /^\((-?\d+),(-?\d+)\)$/.exec(text);
         if (!match) {
             return new Point(0, 0);
         }
