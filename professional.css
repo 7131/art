@@ -110,10 +110,6 @@ canvas {
         width: 90vh;
     }
 
-    button {
-        width: 90vh;
-    }
-
     @media (min-width: 768px) {
 
         input[type="text"] {
@@ -178,6 +174,5 @@ canvas {
         }
 
     }
-
 
 }

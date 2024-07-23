@@ -1,6 +1,5 @@
 // Controller class
 const Controller = function() {
-    this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     window.addEventListener("load", this._initialize.bind(this));
 }
 
@@ -14,14 +13,18 @@ Controller.prototype = {
         this._boardCanvas = document.getElementById("board");
         const drawButton = document.getElementById("draw");
 
-        // button events
+        // events
         drawButton.addEventListener("click", this._draw.bind(this));
+
+        // constants
+        this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     },
 
     // "Draw" button process
     "_draw": function(e) {
         // get the pattern
-        const numbers = this._createNumbers(this._patternText.value);
+        const letters = this._patternText.value.toLowerCase().split("");
+        const numbers = letters.map(elem => this._alphabet.indexOf(elem)).filter(elem => 0 <= elem);
         const points = this._createPoints(numbers);
 
         // get drawing context
@@ -32,25 +35,11 @@ Controller.prototype = {
         // draw line segments
         const cx = this._boardCanvas.width / 2;
         const cy = this._boardCanvas.height / 2;
-        context.moveTo(cx + points[0].x, cy - points[0].y);
-        for (let i = 1; i < points.length; i++) {
-            context.lineTo(cx + points[i].x, cy - points[i].y);
+        context.moveTo(cx, cy);
+        for (const pt of points) {
+            context.lineTo(cx + pt.x, cy - pt.y);
         }
         context.stroke();
-    },
-
-    // create numbers
-    "_createNumbers": function(pattern) {
-        const numbers = [];
-
-        // convert string to numeric array
-        for (const letter of pattern.toLowerCase()) {
-            const number = this._alphabet.indexOf(letter);
-            if (0 <= number) {
-                numbers.push(number);
-            }
-        }
-        return numbers;
     },
 
     // create points
@@ -62,24 +51,18 @@ Controller.prototype = {
         let theta = 0;
 
         // polar coordinate transformation
-        const points = [ new Point(0, 0) ];
+        const points = [];
         for (let i = 0; i < count; i++) {
             radius++;
             theta += numbers[index] * delta;
             const px = radius * Math.cos(theta);
             const py = radius * Math.sin(theta);
-            points.push(new Point(px, py));
+            points.push({ "x": px, "y": py });
             index = (index + 1) % numbers.length;
         }
         return points;
     },
 
-}
-
-// Point class
-const Point = function(x, y) {
-    this.x = x;
-    this.y = y;
 }
 
 // start the controller

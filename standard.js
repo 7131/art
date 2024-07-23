@@ -1,6 +1,5 @@
 // Controller class
 const Controller = function() {
-    this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     window.addEventListener("load", this._initialize.bind(this));
 }
 
@@ -11,108 +10,94 @@ Controller.prototype = {
     "_initialize": function(e) {
         // DOM elements
         this._patternText = document.getElementById("pattern");
-        this._boardCanvas = document.getElementById("board");
+        this._widthLabel = document.getElementById("width_value");
+        this._heightLabel = document.getElementById("height_value");
         this._countLabel = document.getElementById("count_value");
         this._constantLabel = document.getElementById("constant_value");
         this._deltaLabel = document.getElementById("delta_value");
+        this._widthSlider = document.getElementById("width");
+        this._heightSlider = document.getElementById("height");
+        this._countSlider = document.getElementById("count");
+        this._constantSlider = document.getElementById("constant");
+        this._deltaSlider = document.getElementById("delta");
+        this._boardCanvas = document.getElementById("board");
         const drawButton = document.getElementById("draw");
-        const widthRange = document.getElementById("width");
-        const heightRange = document.getElementById("height");
-        const countRange = document.getElementById("count");
-        const constantRange = document.getElementById("constant");
-        const deltaRange = document.getElementById("delta");
 
-        // events for WebKit
-        widthRange.addEventListener("input", this._showValue.bind(this));
-        widthRange.addEventListener("input", this._changeSize.bind(this));
-        widthRange.addEventListener("input", this._draw.bind(this));
-        heightRange.addEventListener("input", this._showValue.bind(this));
-        heightRange.addEventListener("input", this._changeSize.bind(this));
-        heightRange.addEventListener("input", this._draw.bind(this));
-        countRange.addEventListener("input", this._showValue.bind(this));
-        countRange.addEventListener("input", this._draw.bind(this));
-        constantRange.addEventListener("input", this._showScale.bind(this));
-        constantRange.addEventListener("input", this._draw.bind(this));
-        deltaRange.addEventListener("input", this._showValue.bind(this));
-        deltaRange.addEventListener("input", this._draw.bind(this));
+        // events
+        this._widthSlider.addEventListener("input", this._changeWidthSlider.bind(this));
+        this._heightSlider.addEventListener("input", this._changeHeightSlider.bind(this));
+        this._countSlider.addEventListener("input", this._changeCountSlider.bind(this));
+        this._constantSlider.addEventListener("input", this._changeConstantSlider.bind(this));
+        this._deltaSlider.addEventListener("input", this._changeDeltaSlider.bind(this));
+        drawButton.addEventListener("click", this._drawCanvas.bind(this));
 
-        // events for IE
-        widthRange.addEventListener("change", this._showValue.bind(this));
-        widthRange.addEventListener("change", this._changeSize.bind(this));
-        widthRange.addEventListener("change", this._draw.bind(this));
-        heightRange.addEventListener("change", this._showValue.bind(this));
-        heightRange.addEventListener("change", this._changeSize.bind(this));
-        heightRange.addEventListener("change", this._draw.bind(this));
-        countRange.addEventListener("change", this._showValue.bind(this));
-        countRange.addEventListener("change", this._draw.bind(this));
-        constantRange.addEventListener("change", this._showScale.bind(this));
-        constantRange.addEventListener("change", this._draw.bind(this));
-        deltaRange.addEventListener("change", this._showValue.bind(this));
-        deltaRange.addEventListener("change", this._draw.bind(this));
-
-        // common events
-        drawButton.addEventListener("click", this._draw.bind(this));
+        // constants
+        this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     },
 
-    // show the slider value
-    "_showValue": function(e) {
-        document.getElementById(e.srcElement.id + "_value").textContent = e.srcElement.value;
+    // canvas width slider process
+    "_changeWidthSlider": function(e) {
+        const width = this._widthSlider.value;
+        this._widthLabel.textContent = width;
+        this._boardCanvas.width = width;
+        this._draw();
     },
 
-    // show the scale value
-    "_showScale": function(e) {
+    // canvas height slider process
+    "_changeHeightSlider": function(e) {
+        const height = this._heightSlider.value;
+        this._heightLabel.textContent = height;
+        this._boardCanvas.height = height;
+        this._draw();
+    },
+
+    // "Number of segments" slider process
+    "_changeCountSlider": function(e) {
+        this._countLabel.textContent = this._countSlider.value;
+        this._draw();
+    },
+
+    // "Increase in length" slider process
+    "_changeConstantSlider": function(e) {
         // get the slider value
-        const value = e.srcElement.value;
-        let scale = Math.floor(value / 9);
-        let number = (value % 9) + 1;
+        const value = parseInt(this._constantSlider.value, 10);
+        const scale = Math.floor(value / 9);
+        const number = (value % 9) + 1;
 
         // convert to scale value (treated as a string due to error)
-        let text;
-        if (value < 0) {
-            // less than 1
-            scale++;
-            number += 9;
-            if (number == 10) {
-                number = 1;
-            }
-            text = "" + number;
-            while (scale < 0) {
-                text = "0" + text;
-                scale++;
-            }
-            text = "0." + text;
+        let text = "";
+        if (scale < 0) {
+            text = "0." + "0".repeat(-scale - 1) + ((number + 8) % 9 + 1);
         } else {
-            // 1 or more
-            text = "" + number;
-            while (0 < scale) {
-                text += "0";
-                scale--;
-            }
+            text = number + "0".repeat(scale);
         }
 
         // set the value
-        document.getElementById(e.srcElement.id + "_value").textContent = text;
+        this._constantLabel.textContent = text;
+        this._draw();
     },
 
-    // change the canvas size
-    "_changeSize": function(e) {
-        if (e.srcElement.id == "height") {
-            this._boardCanvas.height = e.srcElement.value;
-        } else {
-            this._boardCanvas.width = e.srcElement.value;
-        }
+    // "Increase in angle" slider process
+    "_changeDeltaSlider": function(e) {
+        this._deltaLabel.textContent = this._deltaSlider.value;
+        this._draw();
     },
 
     // "Draw" button process
-    "_draw": function(e) {
+    "_drawCanvas": function(e) {
+        this._draw();
+    },
+
+    // draw on the canvas
+    "_draw": function() {
         // get settings
         const count = parseInt(this._countLabel.textContent, 10);
         const constant = parseFloat(this._constantLabel.textContent);
         const delta = parseInt(this._deltaLabel.textContent, 10);
 
         // get the pattern
-        const pattern = this._patternText.value;
-        const numbers = this._createNumbers(pattern);
+        const letters = this._patternText.value.toLowerCase().split("");
+        const numbers = letters.map(elem => this._alphabet.indexOf(elem)).filter(elem => 0 <= elem);
         const points = this._createPoints(numbers, count, constant, delta);
 
         // get drawing context
@@ -123,25 +108,11 @@ Controller.prototype = {
         // draw line segments
         const cx = this._boardCanvas.width / 2;
         const cy = this._boardCanvas.height / 2;
-        context.moveTo(cx + points[0].x, cy - points[0].y);
-        for (let i = 1; i < points.length; i++) {
-            context.lineTo(cx + points[i].x, cy - points[i].y);
+        context.moveTo(cx, cy);
+        for (const pt of points) {
+            context.lineTo(cx + pt.x, cy - pt.y);
         }
         context.stroke();
-    },
-
-    // create numbers
-    "_createNumbers": function(pattern) {
-        const numbers = [];
-
-        // convert string to numeric array
-        for (const letter of pattern.toLowerCase()) {
-            const number = this._alphabet.indexOf(letter);
-            if (0 <= number) {
-                numbers.push(number);
-            }
-        }
-        return numbers;
     },
 
     // create points
@@ -152,24 +123,18 @@ Controller.prototype = {
         let theta = 0;
 
         // polar coordinate transformation
-        const points = [ new Point(0, 0) ];
+        const points = [];
         for (let i = 0; i < count; i++) {
             radius += constant;
             theta += numbers[index] * delta;
             const px = radius * Math.cos(theta);
             const py = radius * Math.sin(theta);
-            points.push(new Point(px, py));
+            points.push({ "x": px, "y": py });
             index = (index + 1) % numbers.length;
         }
         return points;
     },
 
-}
-
-// Point class
-const Point = function(x, y) {
-    this.x = x;
-    this.y = y;
 }
 
 // start the controller
