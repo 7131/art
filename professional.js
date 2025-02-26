@@ -197,7 +197,6 @@ Controller.prototype = {
         this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this));
 
         // initial drawing
-        this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
         this._mouse = new Point(0, 0);
         this._center = new Point(0, 0);
         this._draw();
@@ -347,7 +346,7 @@ Controller.prototype = {
 
         // get the pattern
         const letters = this._patternText.value.toLowerCase().split("");
-        const numbers = letters.map(elem => this._alphabet.indexOf(elem)).filter(elem => 0 <= elem);
+        const numbers = letters.map(elem => parseInt(elem, 36)).filter(elem => !isNaN(elem));
         const points = creator.create(numbers, count, constant, delta);
 
         // get drawing context

@@ -30,9 +30,6 @@ Controller.prototype = {
         this._constantSlider.addEventListener("input", this._changeConstantSlider.bind(this));
         this._deltaSlider.addEventListener("input", this._changeDeltaSlider.bind(this));
         drawButton.addEventListener("click", this._drawCanvas.bind(this));
-
-        // constants
-        this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     },
 
     // canvas width slider process
@@ -97,7 +94,7 @@ Controller.prototype = {
 
         // get the pattern
         const letters = this._patternText.value.toLowerCase().split("");
-        const numbers = letters.map(elem => this._alphabet.indexOf(elem)).filter(elem => 0 <= elem);
+        const numbers = letters.map(elem => parseInt(elem, 36)).filter(elem => !isNaN(elem));
         const points = this._createPoints(numbers, count, constant, delta);
 
         // get drawing context

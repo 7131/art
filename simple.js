@@ -15,16 +15,13 @@ Controller.prototype = {
 
         // events
         drawButton.addEventListener("click", this._draw.bind(this));
-
-        // constants
-        this._alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     },
 
     // "Draw" button process
     "_draw": function(e) {
         // get the pattern
         const letters = this._patternText.value.toLowerCase().split("");
-        const numbers = letters.map(elem => this._alphabet.indexOf(elem)).filter(elem => 0 <= elem);
+        const numbers = letters.map(elem => parseInt(elem, 36)).filter(elem => !isNaN(elem));
         const points = this._createPoints(numbers);
 
         // get drawing context
