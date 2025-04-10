@@ -194,7 +194,7 @@ Controller.prototype = {
         this._boardCanvas.addEventListener("mousedown", this._beginMouseDrag.bind(this));
         this._boardCanvas.addEventListener("mousemove", this._doMouseDrag.bind(this));
         this._boardCanvas.addEventListener("touchstart", this._beginTouchDrag.bind(this));
-        this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this));
+        this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this), { "passive": false });
 
         // initial drawing
         this._mouse = new Point(0, 0);
