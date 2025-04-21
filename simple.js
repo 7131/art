@@ -33,9 +33,7 @@ Controller.prototype = {
         const cx = this._boardCanvas.width / 2;
         const cy = this._boardCanvas.height / 2;
         context.moveTo(cx, cy);
-        for (const pt of points) {
-            context.lineTo(cx + pt.x, cy - pt.y);
-        }
+        points.forEach(elem => context.lineTo(cx + elem.x, cy - elem.y));
         context.stroke();
     },
 
