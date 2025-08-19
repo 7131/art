@@ -32,10 +32,10 @@ Color.prototype = {
 
     // get hexadecimal string
     "toHex": function() {
-        const r = ("0" + this.r.toString(16)).slice(-2);
-        const g = ("0" + this.g.toString(16)).slice(-2);
-        const b = ("0" + this.b.toString(16)).slice(-2);
-        return "#" + r + g + b;
+        const r = `0${this.r.toString(16)}`.slice(-2);
+        const g = `0${this.g.toString(16)}`.slice(-2);
+        const b = `0${this.b.toString(16)}`.slice(-2);
+        return `#${r}${g}${b}`;
     },
 
 }
@@ -65,7 +65,7 @@ Point.prototype = {
 
     // get coordinate string
     "toString": function() {
-        return "(" + this.x + "," + this.y + ")";
+        return `(${this.x},${this.y})`;
     },
 
 }
@@ -413,9 +413,9 @@ Controller.prototype = {
 
         // convert to scale value (treated as a string due to error)
         if (scale < 0) {
-            return "0." + "0".repeat(-scale - 1) + ((number + 8) % 9 + 1);
+            return `0.${"0".repeat(-scale - 1)}${((number + 8) % 9 + 1)}`;
         } else {
-            return number + "0".repeat(scale);
+            return `${number}${"0".repeat(scale)}`;
         }
     },
 
