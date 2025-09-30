@@ -64,7 +64,7 @@ Controller.prototype = {
         // convert to scale value (treated as a string due to error)
         let text;
         if (scale < 0) {
-            text = `0.${"0".repeat(-scale - 1)}${((number + 8) % 9 + 1)}`;
+            text = `0.${"0".repeat(-scale - 1)}${(number + 8) % 9 + 1}`;
         } else {
             text = `${number}${"0".repeat(scale)}`;
         }

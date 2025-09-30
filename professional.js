@@ -413,7 +413,7 @@ Controller.prototype = {
 
         // convert to scale value (treated as a string due to error)
         if (scale < 0) {
-            return `0.${"0".repeat(-scale - 1)}${((number + 8) % 9 + 1)}`;
+            return `0.${"0".repeat(-scale - 1)}${(number + 8) % 9 + 1}`;
         } else {
             return `${number}${"0".repeat(scale)}`;
         }
