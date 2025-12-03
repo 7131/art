@@ -1,6 +1,7 @@
 # Siteswap Art
 
-https://7131.github.io/art/
+English site: https://7131.github.io/art/<br>
+Japanese site: https://app.7131.jp/art/
 
 This service transforms siteswap patterns into graphics.
 A siteswap pattern is usually written as 3, for example, but is actually sequence of 3 3 3 ... infinitely long.
