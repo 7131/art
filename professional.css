@@ -1,12 +1,12 @@
 @charset "utf-8";
 
-nav span {
-    margin-right: 1ex;
-}
-
 body {
     line-height: 1.8;
     margin-bottom: 10ex;
+}
+
+nav span {
+    margin-right: 1ex;
 }
 
 input {
@@ -106,73 +106,65 @@ canvas {
         line-height: 1.5;
     }
 
-    input {
-        width: 90vh;
+    input[type="text"] {
+        width: 6ex;
+        text-align: right;
     }
 
-    @media (min-width: 768px) {
+    input[type="range"] {
+        width: 50ex;
+        padding: 0ex;
+    }
 
-        input[type="text"] {
-            width: 6ex;
-            text-align: right;
-        }
+    #pattern {
+        width: auto;
+        text-align: left;
+    }
 
-        input[type="range"] {
-            width: 50ex;
-            padding: 0ex;
-        }
+    #width_value {
+        display: inline;
+    }
 
-        #pattern {
-            width: auto;
-            text-align: left;
-        }
+    #height_value {
+        display: inline;
+    }
 
-        #width_value {
-            display: inline;
-        }
+    #color_init, #color_step {
+        width: 10ex;
+        text-align: left;
+    }
 
-        #height_value {
-            display: inline;
-        }
+    .table {
+        display: table;
+    }
 
-        #color_init, #color_step {
-            width: 10ex;
-            text-align: left;
-        }
+    .table .row {
+        display: table-row;
+    }
 
-        .table {
-            display: table;
-        }
+    .table .row .cell {
+        display: table-cell;
+        padding: 0ex 0.5ex;
+        vertical-align: middle;
+    }
 
-        .table .row {
-            display: table-row;
-        }
+    #config .row .cell {
+        padding-top: 1ex;
+    }
 
-        .table .row .cell {
-            display: table-cell;
-            padding: 0ex 0.5ex;
-            vertical-align: middle;
-        }
+    #formula .head {
+        display: table-row;
+    }
 
-        #config .row .cell {
-            padding-top: 1ex;
-        }
+    #formula .row .cell {
+        border: 1px solid gray;
+        padding: 1ex;
+    }
 
-        #formula .head {
-            display: table-row;
-        }
-
-        #formula .row .cell {
-            border: 1px solid gray;
-            padding: 1ex;
-        }
-
-        #formula .head .cell {
-            padding: 0.3ex 1ex;
-            text-align: center;
-            font-weight: bold;
-        }
-
+    #formula .head .cell {
+        padding: 0.3ex 1ex;
+        text-align: center;
+        font-weight: bold;
     }
 
 }

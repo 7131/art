@@ -1,12 +1,12 @@
 @charset "utf-8";
 
-nav span {
-    margin-right: 1ex;
-}
-
 body {
     line-height: 1.8;
     margin-bottom: 10ex;
+}
+
+nav span {
+    margin-right: 1ex;
 }
 
 table tr {
@@ -32,7 +32,7 @@ img {
     padding: 0.3ex 0.8ex;
 }
 
-@media (min-width: 768px) {
+@media (orientation: landscape) {
 
     body {
         line-height: 1.5;

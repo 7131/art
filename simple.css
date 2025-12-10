@@ -1,12 +1,12 @@
 @charset "utf-8";
 
-nav span {
-    margin-right: 1ex;
-}
-
 body {
     line-height: 1.8;
     margin-bottom: 10ex;
+}
+
+nav span {
+    margin-right: 1ex;
 }
 
 input {
@@ -34,38 +34,26 @@ canvas {
     }
 
     input {
-        width: 90vh;
+        width: auto;
     }
 
     button {
-        width: 90vh;
+        margin-top: 0ex;
+        width: auto;
     }
 
-    @media (min-width: 768px) {
+    .table {
+        display: table;
+    }
 
-        input {
-            width: auto;
-        }
+    .table .row {
+        display: table-row;
+    }
 
-        button {
-            margin-top: 0ex;
-            width: auto;
-        }
-
-        .table {
-            display: table;
-        }
-
-        .table .row {
-            display: table-row;
-        }
-
-        .table .row .cell {
-            display: table-cell;
-            padding: 0ex 0.5ex;
-            vertical-align: middle;
-        }
-
+    .table .row .cell {
+        display: table-cell;
+        padding: 0ex 0.5ex;
+        vertical-align: middle;
     }
 
 }

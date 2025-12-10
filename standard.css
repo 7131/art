@@ -1,12 +1,12 @@
 @charset "utf-8";
 
-nav span {
-    margin-right: 1ex;
-}
-
 body {
     line-height: 1.8;
     margin-bottom: 10ex;
+}
+
+nav span {
+    margin-right: 1ex;
 }
 
 input {
@@ -64,58 +64,46 @@ canvas {
     }
 
     input {
-        width: 90vh;
+        width: auto;
+    }
+
+    input[type="range"] {
+        width: 50ex;
+        padding: 0ex;
     }
 
     button {
-        width: 90vh;
+        margin-top: 0ex;
+        width: auto;
     }
 
-    @media (min-width: 768px) {
+    #width_value {
+        display: inline;
+    }
 
-        input {
-            width: auto;
-        }
+    #height_value {
+        display: inline;
+    }
 
-        input[type="range"] {
-            width: 50ex;
-            padding: 0ex;
-        }
+    .table {
+        display: table;
+    }
 
-        button {
-            margin-top: 0ex;
-            width: auto;
-        }
+    .table .row {
+        display: table-row;
+    }
 
-        #width_value {
-            display: inline;
-        }
+    .table .row .cell {
+        display: table-cell;
+        padding: 0ex 0.5ex;
+    }
 
-        #height_value {
-            display: inline;
-        }
+    #config .row .cell {
+        padding-top: 1ex;
+    }
 
-        .table {
-            display: table;
-        }
-
-        .table .row {
-            display: table-row;
-        }
-
-        .table .row .cell {
-            display: table-cell;
-            padding: 0ex 0.5ex;
-        }
-
-        #config .row .cell {
-            padding-top: 1ex;
-        }
-
-        #config .row .number {
-            text-align: right;
-        }
-
+    #config .row .number {
+        text-align: right;
     }
 
 }
