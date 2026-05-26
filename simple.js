@@ -1,44 +1,46 @@
 // Controller class
-const Controller = function() {
-    window.addEventListener("load", this._initialize.bind(this));
-}
+class Controller {
+    #patternText;
+    #boardCanvas;
 
-// Controller prototype
-Controller.prototype = {
+    // constructor
+    constructor() {
+        window.addEventListener("load", this.#initialize.bind(this));
+    }
 
     // initialize the private fields
-    "_initialize": function(e) {
+    #initialize(e) {
         // DOM elements
-        this._patternText = document.getElementById("pattern");
-        this._boardCanvas = document.getElementById("board");
+        this.#patternText = document.getElementById("pattern");
+        this.#boardCanvas = document.getElementById("board");
         const drawButton = document.getElementById("draw");
 
         // events
-        drawButton.addEventListener("click", this._draw.bind(this));
-    },
+        drawButton.addEventListener("click", this.#draw.bind(this));
+    }
 
     // "Draw" button process
-    "_draw": function(e) {
+    #draw(e) {
         // get the pattern
-        const letters = this._patternText.value.toLowerCase().split("");
+        const letters = this.#patternText.value.toLowerCase().split("");
         const numbers = letters.map(elem => parseInt(elem, 36)).filter(elem => !isNaN(elem));
-        const points = this._createPoints(numbers);
+        const points = this.#createPoints(numbers);
 
         // get drawing context
-        const context = this._boardCanvas.getContext("2d");
-        context.clearRect(0, 0, this._boardCanvas.width, this._boardCanvas.height);
+        const context = this.#boardCanvas.getContext("2d");
+        context.clearRect(0, 0, this.#boardCanvas.width, this.#boardCanvas.height);
         context.beginPath();
 
         // draw line segments
-        const cx = this._boardCanvas.width / 2;
-        const cy = this._boardCanvas.height / 2;
+        const cx = this.#boardCanvas.width / 2;
+        const cy = this.#boardCanvas.height / 2;
         context.moveTo(cx, cy);
         points.forEach(elem => context.lineTo(cx + elem.x, cy - elem.y));
         context.stroke();
-    },
+    }
 
     // create points
-    "_createPoints": function(numbers) {
+    #createPoints(numbers) {
         const count = 200;
         const delta = Math.PI * 2 / 36;
         let index = 0;
@@ -56,7 +58,7 @@ Controller.prototype = {
             index = (index + 1) % numbers.length;
         }
         return points;
-    },
+    }
 
 }
 

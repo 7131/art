@@ -1,95 +1,89 @@
 // Color class
-const Color = function(r, g, b) {
-    this.r = Math.floor(r) % 256;
-    this.g = Math.floor(g) % 256;
-    this.b = Math.floor(b) % 256;
-}
+class Color {
 
-// parse hexadecimal string
-Color.fromHex = function(text) {
-    // check the arguments
-    const match = /^#?([0-9a-fA-F]{6})$/.exec(text.trim());
-    if (!match) {
-        return new Color(0, 0, 0);
+    // constructor
+    constructor(r, g, b) {
+        this.r = Math.floor(r) % 256;
+        this.g = Math.floor(g) % 256;
+        this.b = Math.floor(b) % 256;
     }
 
-    // get RGB value
-    const r = parseInt(match[1].substring(0, 2), 16);
-    const g = parseInt(match[1].substring(2, 4), 16);
-    const b = parseInt(match[1].substring(4, 6), 16);
-    return new Color(r, g, b);
-}
-
-// Color prototype
-Color.prototype = {
+    // parse hexadecimal string
+    static fromHex(text) {
+        const match = /^#?([0-9a-fA-F]{6})$/.exec(text.trim());
+        if (!match) {
+            return new Color(0, 0, 0);
+        }
+        const r = parseInt(match[1].substring(0, 2), 16);
+        const g = parseInt(match[1].substring(2, 4), 16);
+        const b = parseInt(match[1].substring(4, 6), 16);
+        return new Color(r, g, b);
+    }
 
     // add color circulation
-    "addColor": function(color) {
+    addColor(color) {
         this.r = (this.r + color.r) % 256;
         this.g = (this.g + color.g) % 256;
         this.b = (this.b + color.b) % 256;
-    },
+    }
 
     // get hexadecimal string
-    "toHex": function() {
+    toHex() {
         const r = `0${this.r.toString(16)}`.slice(-2);
         const g = `0${this.g.toString(16)}`.slice(-2);
         const b = `0${this.b.toString(16)}`.slice(-2);
         return `#${r}${g}${b}`;
-    },
+    }
 
 }
 
 // Point class
-const Point = function(x, y) {
-    this.x = Math.floor(x);
-    this.y = Math.floor(y);
-}
+class Point {
 
-// parse coordinate string
-Point.fromString = function(text) {
-    // check the arguments
-    const match = /^\((-?\d+),(-?\d+)\)$/.exec(text);
-    if (!match) {
-        return new Point(0, 0);
+    // constructor
+    constructor(x, y) {
+        this.x = Math.floor(x);
+        this.y = Math.floor(y);
     }
 
-    // coordinate calculation
-    const x = parseInt(match[1], 10);
-    const y = parseInt(match[2], 10);
-    return new Point(x, y);
-},
-
-// Point prototype
-Point.prototype = {
+    // parse coordinate string
+    static fromString(text) {
+        const match = /^\((-?\d+),(-?\d+)\)$/.exec(text);
+        if (!match) {
+            return new Point(0, 0);
+        }
+        const x = parseInt(match[1], 10);
+        const y = parseInt(match[2], 10);
+        return new Point(x, y);
+    }
 
     // get coordinate string
-    "toString": function() {
+    toString() {
         return `(${this.x},${this.y})`;
-    },
+    }
 
 }
 
 // Point creator class
-const PointCreator = function(method) {
-    switch (method) {
-        case "spectral":
-            this.create = this._createSpectral;
-            break;
-        case "screw":
-            this.create = this._createScrew;
-            break;
-        default:
-            this.create = this._createSpiral;
-            break;
-    }
-}
+class PointCreator {
 
-// Point creator prototype
-PointCreator.prototype = {
+    // constructor
+    constructor(method) {
+        switch (method) {
+            case "spectral":
+                this.create = this.#createSpectral;
+                break;
+            case "screw":
+                this.create = this.#createScrew;
+                break;
+            default:
+                this.create = this.#createSpiral;
+                break;
+        }
+    }
 
     // create spectral coordinates
-    "_createSpectral": function(numbers, count, constant, angle) {
+    #createSpectral(numbers, count, constant, angle) {
         const delta = angle;
         let index = 0;
 
@@ -102,10 +96,10 @@ PointCreator.prototype = {
             index = (index + 1) % numbers.length;
         }
         return points;
-    },
+    }
 
     // create screw projective coordinates
-    "_createScrew": function(numbers, count, constant, angle) {
+    #createScrew(numbers, count, constant, angle) {
         const delta = Math.PI * 2 * angle / 360;
         let index = 0;
         let px = 0;
@@ -122,10 +116,10 @@ PointCreator.prototype = {
             index = (index + 1) % numbers.length;
         }
         return points;
-    },
+    }
 
     // create spiral coordinates
-    "_createSpiral": function(numbers, count, constant, angle) {
+    #createSpiral(numbers, count, constant, angle) {
         const delta = Math.PI * 2 * angle / 360;
         let index = 0;
         let radius = 0;
@@ -142,220 +136,236 @@ PointCreator.prototype = {
             index = (index + 1) % numbers.length;
         }
         return points;
-    },
+    }
 
 }
 
 // Controller class
-const Controller = function() {
-    window.addEventListener("load", this._initialize.bind(this));
-}
+class Controller {
+    #patternText;
+    #widthText;
+    #heightText;
+    #countText;
+    #constantText;
+    #deltaText;
+    #colorInit;
+    #colorStep;
+    #widthSlider;
+    #heightSlider;
+    #countSlider;
+    #constantSlider;
+    #deltaSlider;
+    #boardCanvas;
+    #centerLabel;
+    #methodRadios;
+    #mouse = new Point(0, 0);
+    #center = new Point(0, 0);
 
-// Controller prototype
-Controller.prototype = {
+    // constructor
+    constructor() {
+        window.addEventListener("load", this.#initialize.bind(this));
+    }
 
     // initialize the private fields
-    "_initialize": function(e) {
+    #initialize(e) {
         // DOM elements
-        this._patternText = document.getElementById("pattern");
-        this._widthText = document.getElementById("width_value");
-        this._heightText = document.getElementById("height_value");
-        this._countText = document.getElementById("count_value");
-        this._constantText = document.getElementById("constant_value");
-        this._deltaText = document.getElementById("delta_value");
-        this._colorInit = document.getElementById("color_init");
-        this._colorStep = document.getElementById("color_step");
-        this._widthSlider = document.getElementById("width");
-        this._heightSlider = document.getElementById("height");
-        this._countSlider = document.getElementById("count");
-        this._constantSlider = document.getElementById("constant");
-        this._deltaSlider = document.getElementById("delta");
-        this._boardCanvas = document.getElementById("board");
-        this._centerLabel = document.getElementById("center");
-        this._methodRadios = Array.from(document.getElementsByName("method"));
+        this.#patternText = document.getElementById("pattern");
+        this.#widthText = document.getElementById("width_value");
+        this.#heightText = document.getElementById("height_value");
+        this.#countText = document.getElementById("count_value");
+        this.#constantText = document.getElementById("constant_value");
+        this.#deltaText = document.getElementById("delta_value");
+        this.#colorInit = document.getElementById("color_init");
+        this.#colorStep = document.getElementById("color_step");
+        this.#widthSlider = document.getElementById("width");
+        this.#heightSlider = document.getElementById("height");
+        this.#countSlider = document.getElementById("count");
+        this.#constantSlider = document.getElementById("constant");
+        this.#deltaSlider = document.getElementById("delta");
+        this.#boardCanvas = document.getElementById("board");
+        this.#centerLabel = document.getElementById("center");
+        this.#methodRadios = Array.from(document.getElementsByName("method"));
 
         // common events
-        this._patternText.addEventListener("change", this._drawCanvas.bind(this));
-        this._widthText.addEventListener("change", this._changeWidthText.bind(this));
-        this._heightText.addEventListener("change", this._changeHeightText.bind(this));
-        this._countText.addEventListener("change", this._changeCountText.bind(this));
-        this._constantText.addEventListener("change", this._changeConstantText.bind(this));
-        this._deltaText.addEventListener("change", this._changeDeltaText.bind(this));
-        this._colorInit.addEventListener("change", this._drawCanvas.bind(this));
-        this._colorStep.addEventListener("change", this._drawCanvas.bind(this));
-        this._widthSlider.addEventListener("input", this._changeWidthSlider.bind(this));
-        this._heightSlider.addEventListener("input", this._changeHeightSlider.bind(this));
-        this._countSlider.addEventListener("input", this._changeCountSlider.bind(this));
-        this._constantSlider.addEventListener("input", this._changeConstantSlider.bind(this));
-        this._deltaSlider.addEventListener("input", this._changeDeltaSlider.bind(this));
-        this._methodRadios.forEach(elem => elem.addEventListener("change", this._drawCanvas.bind(this)));
+        this.#patternText.addEventListener("change", this.#drawCanvas.bind(this));
+        this.#widthText.addEventListener("change", this.#changeWidthText.bind(this));
+        this.#heightText.addEventListener("change", this.#changeHeightText.bind(this));
+        this.#countText.addEventListener("change", this.#changeCountText.bind(this));
+        this.#constantText.addEventListener("change", this.#changeConstantText.bind(this));
+        this.#deltaText.addEventListener("change", this.#changeDeltaText.bind(this));
+        this.#colorInit.addEventListener("change", this.#drawCanvas.bind(this));
+        this.#colorStep.addEventListener("change", this.#drawCanvas.bind(this));
+        this.#widthSlider.addEventListener("input", this.#changeWidthSlider.bind(this));
+        this.#heightSlider.addEventListener("input", this.#changeHeightSlider.bind(this));
+        this.#countSlider.addEventListener("input", this.#changeCountSlider.bind(this));
+        this.#constantSlider.addEventListener("input", this.#changeConstantSlider.bind(this));
+        this.#deltaSlider.addEventListener("input", this.#changeDeltaSlider.bind(this));
+        this.#methodRadios.forEach(elem => elem.addEventListener("change", this.#drawCanvas.bind(this)));
 
         // drag events
-        this._boardCanvas.addEventListener("mousedown", this._beginMouseDrag.bind(this));
-        this._boardCanvas.addEventListener("mousemove", this._doMouseDrag.bind(this));
-        this._boardCanvas.addEventListener("touchstart", this._beginTouchDrag.bind(this));
-        this._boardCanvas.addEventListener("touchmove", this._doTouchDrag.bind(this), { "passive": false });
+        this.#boardCanvas.addEventListener("mousedown", this.#beginMouseDrag.bind(this));
+        this.#boardCanvas.addEventListener("mousemove", this.#doMouseDrag.bind(this));
+        this.#boardCanvas.addEventListener("touchstart", this.#beginTouchDrag.bind(this));
+        this.#boardCanvas.addEventListener("touchmove", this.#doTouchDrag.bind(this), { "passive": false });
 
         // initial drawing
-        this._mouse = new Point(0, 0);
-        this._center = new Point(0, 0);
-        this._draw();
-    },
+        this.#draw();
+    }
 
     // "Draw" button process
-    "_drawCanvas": function(e) {
-        this._draw();
-    },
+    #drawCanvas(e) {
+        this.#draw();
+    }
 
     // canvas width text process
-    "_changeWidthText": function(e) {
-        this._setValue(this._widthText, this._widthSlider);
-        this._changeArea();
-    },
+    #changeWidthText(e) {
+        this.#setValue(this.#widthText, this.#widthSlider);
+        this.#changeArea();
+    }
 
     // canvas height text process
-    "_changeHeightText": function(e) {
-        this._setValue(this._heightText, this._heightSlider);
-        this._changeArea();
-    },
+    #changeHeightText(e) {
+        this.#setValue(this.#heightText, this.#heightSlider);
+        this.#changeArea();
+    }
 
     // "Number of segments" text process
-    "_changeCountText": function(e) {
-        this._setScale(this._countText, this._countSlider);
-        this._draw();
-    },
+    #changeCountText(e) {
+        this.#setScale(this.#countText, this.#countSlider);
+        this.#draw();
+    }
 
     // "Increase in length" text process
-    "_changeConstantText": function(e) {
-        this._setScale(this._constantText, this._constantSlider);
-        this._draw();
-    },
+    #changeConstantText(e) {
+        this.#setScale(this.#constantText, this.#constantSlider);
+        this.#draw();
+    }
 
     // "Increase in angle" text process
-    "_changeDeltaText": function(e) {
-        this._setValue(this._deltaText, this._deltaSlider);
-        this._draw();
-    },
+    #changeDeltaText(e) {
+        this.#setValue(this.#deltaText, this.#deltaSlider);
+        this.#draw();
+    }
 
     // canvas width slider process
-    "_changeWidthSlider": function(e) {
-        this._widthText.value = this._widthSlider.value;
-        this._changeArea();
-    },
+    #changeWidthSlider(e) {
+        this.#widthText.value = this.#widthSlider.value;
+        this.#changeArea();
+    }
 
     // canvas height slider process
-    "_changeHeightSlider": function(e) {
-        this._heightText.value = this._heightSlider.value;
-        this._changeArea();
-    },
+    #changeHeightSlider(e) {
+        this.#heightText.value = this.#heightSlider.value;
+        this.#changeArea();
+    }
 
     // "Number of segments" slider process
-    "_changeCountSlider": function(e) {
-        this._countText.value = this._toScale(this._countSlider.value);
-        this._draw();
-    },
+    #changeCountSlider(e) {
+        this.#countText.value = this.#toScale(this.#countSlider.value);
+        this.#draw();
+    }
 
     // "Increase in length" slider process
-    "_changeConstantSlider": function(e) {
-        this._constantText.value = this._toScale(this._constantSlider.value);
-        this._draw();
-    },
+    #changeConstantSlider(e) {
+        this.#constantText.value = this.#toScale(this.#constantSlider.value);
+        this.#draw();
+    }
 
     // "Increase in angle" slider process
-    "_changeDeltaSlider": function(e) {
-        this._deltaText.value = this._deltaSlider.value;
-        this._draw();
-    },
+    #changeDeltaSlider(e) {
+        this.#deltaText.value = this.#deltaSlider.value;
+        this.#draw();
+    }
 
     // start dragging with mouse
-    "_beginMouseDrag": function(e) {
-        this._mouse.x = e.pageX;
-        this._mouse.y = e.pageY;
-        this._center = Point.fromString(this._centerLabel.textContent);
-    },
+    #beginMouseDrag(e) {
+        this.#mouse.x = e.pageX;
+        this.#mouse.y = e.pageY;
+        this.#center = Point.fromString(this.#centerLabel.textContent);
+    }
 
     // drag processing with mouse
-    "_doMouseDrag": function(e) {
+    #doMouseDrag(e) {
         // whether left click
         if ((e.buttons & 0x0001) == 0) {
             return;
         }
 
         // coordinate calculation
-        const dx = Math.round(e.pageX - this._mouse.x);
-        const dy = Math.round(this._mouse.y - e.pageY);
-        const center = new Point(this._center.x + dx, this._center.y + dy);
+        const dx = Math.round(e.pageX - this.#mouse.x);
+        const dy = Math.round(this.#mouse.y - e.pageY);
+        const center = new Point(this.#center.x + dx, this.#center.y + dy);
 
         // draw
-        this._centerLabel.textContent = center.toString();
-        this._draw();
-    },
+        this.#centerLabel.textContent = center.toString();
+        this.#draw();
+    }
 
     // start dragging by touch
-    "_beginTouchDrag": function(e) {
+    #beginTouchDrag(e) {
         // whether touched with two fingers
         if (e.touches.length != 2) {
             return;
         }
 
         // coordinate calculation
-        this._mouse.x = e.touches[0].pageX;
-        this._mouse.y = e.touches[0].pageY;
-        this._center = Point.fromString(this._centerLabel.textContent);
-    },
+        this.#mouse.x = e.touches[0].pageX;
+        this.#mouse.y = e.touches[0].pageY;
+        this.#center = Point.fromString(this.#centerLabel.textContent);
+    }
 
     // drag processing by touch
-    "_doTouchDrag": function(e) {
+    #doTouchDrag(e) {
         // whether touched with two fingers
         if (e.targetTouches.length != 2) {
             return;
         }
         const first = e.targetTouches[0];
         const second = e.targetTouches[1];
-        if (first.offsetX < 0 || this._boardCanvas.width < first.offsetX || first.offsetY < 0 || this._boardCanvas.height < first.offsetY) {
+        if (first.offsetX < 0 || this.#boardCanvas.width < first.offsetX || first.offsetY < 0 || this.#boardCanvas.height < first.offsetY) {
             return;
         }
-        if (second.offsetX < 0 || this._boardCanvas.width < second.offsetX || second.offsetY < 0 || this._boardCanvas.height < second.offsetY) {
+        if (second.offsetX < 0 || this.#boardCanvas.width < second.offsetX || second.offsetY < 0 || this.#boardCanvas.height < second.offsetY) {
             return;
         }
         e.preventDefault();
 
         // coordinate calculation
-        const dx = Math.round(e.touches[0].pageX - this._mouse.x);
-        const dy = Math.round(this._mouse.y - e.touches[0].pageY);
-        const center = new Point(this._center.x + dx, this._center.y + dy);
+        const dx = Math.round(e.touches[0].pageX - this.#mouse.x);
+        const dy = Math.round(this.#mouse.y - e.touches[0].pageY);
+        const center = new Point(this.#center.x + dx, this.#center.y + dy);
 
         // draw
-        this._centerLabel.textContent = center.toString();
-        this._draw();
-    },
+        this.#centerLabel.textContent = center.toString();
+        this.#draw();
+    }
 
     // draw on the canvas
-    "_draw": function() {
+    #draw() {
         // get settings
-        const center = Point.fromString(this._centerLabel.textContent);
-        const count = parseInt(this._countText.value, 10);
-        const constant = parseFloat(this._constantText.value);
-        const delta = parseInt(this._deltaText.value, 10);
-        const color = Color.fromHex(this._colorInit.value);
-        const step = Color.fromHex(this._colorStep.value);
+        const center = Point.fromString(this.#centerLabel.textContent);
+        const count = parseInt(this.#countText.value, 10);
+        const constant = parseFloat(this.#constantText.value);
+        const delta = parseInt(this.#deltaText.value, 10);
+        const color = Color.fromHex(this.#colorInit.value);
+        const step = Color.fromHex(this.#colorStep.value);
 
         // formulas for drawing
-        const radio = this._methodRadios.find(elem => elem.checked);
+        const radio = this.#methodRadios.find(elem => elem.checked);
         const creator = new PointCreator(radio.value);
 
         // get the pattern
-        const letters = this._patternText.value.toLowerCase().split("");
+        const letters = this.#patternText.value.toLowerCase().split("");
         const numbers = letters.map(elem => parseInt(elem, 36)).filter(elem => !isNaN(elem));
         const points = creator.create(numbers, count, constant, delta);
 
         // get drawing context
-        const context = this._boardCanvas.getContext("2d");
-        context.clearRect(0, 0, this._boardCanvas.width, this._boardCanvas.height);
+        const context = this.#boardCanvas.getContext("2d");
+        context.clearRect(0, 0, this.#boardCanvas.width, this.#boardCanvas.height);
 
         // draw line segments
-        const cx = this._boardCanvas.width / 2 + center.x;
-        const cy = this._boardCanvas.height / 2 - center.y;
+        const cx = this.#boardCanvas.width / 2 + center.x;
+        const cy = this.#boardCanvas.height / 2 - center.y;
         let x = cx;
         let y = cy;
         for (const pt of points) {
@@ -368,10 +378,10 @@ Controller.prototype = {
             context.stroke();
             color.addColor(step);
         }
-    },
+    }
 
     // set the value to slider and text
-    "_setValue": function(text, slider) {
+    #setValue(text, slider) {
         // get the value
         let value = parseInt(text.value, 10);
         if (isNaN(value)) {
@@ -381,28 +391,28 @@ Controller.prototype = {
         // reset the value
         slider.value = value;
         text.value = slider.value;
-    },
+    }
 
     // set the scale to slider and text
-    "_setScale": function(text, slider) {
-        slider.value = this._fromScale(text.value, slider.min);
-        text.value = this._toScale(slider.value);
-    },
+    #setScale(text, slider) {
+        slider.value = this.#fromScale(text.value, slider.min);
+        text.value = this.#toScale(slider.value);
+    }
 
     // resize
-    "_changeArea": function() {
+    #changeArea() {
         // get the settings
-        const width = parseInt(this._widthText.value, 10);
-        const height = parseInt(this._heightText.value, 10);
+        const width = parseInt(this.#widthText.value, 10);
+        const height = parseInt(this.#heightText.value, 10);
 
         // change the drawing size
-        this._boardCanvas.width = width;
-        this._boardCanvas.height = height;
-        this._draw();
-    },
+        this.#boardCanvas.width = width;
+        this.#boardCanvas.height = height;
+        this.#draw();
+    }
 
     // convert integer to scale value
-    "_toScale": function(input) {
+    #toScale(input) {
         // get the integer value
         const value = parseInt(input, 10);
         if (isNaN(value)) {
@@ -417,10 +427,10 @@ Controller.prototype = {
         } else {
             return `${number}${"0".repeat(scale)}`;
         }
-    },
+    }
 
     // convert from scale value to integer
-    "_fromScale": function(input, min) {
+    #fromScale(input, min) {
         // get the scale value
         let value = parseFloat(input);
         if (isNaN(value) || value <= 0) {
@@ -442,7 +452,7 @@ Controller.prototype = {
             }
         }
         return scale * 9 + Math.floor(value) - 1;
-    },
+    }
 
 }
 
